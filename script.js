@@ -8,6 +8,7 @@ const DRINKS_DB = [
         name: "Cold Foam Matcha Latte",
         price: "€7.20",
         type: "special",
+        image: "images/cold_foam_matcha.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -23,6 +24,7 @@ const DRINKS_DB = [
         name: "Matcha Soda",
         price: "€7.20",
         type: "special",
+        image: "images/matcha_soda.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -38,6 +40,7 @@ const DRINKS_DB = [
         name: "Coconut Cloud Matcha",
         price: "€7.20",
         type: "special",
+        image: "images/coconut_cloud_matcha.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -53,6 +56,7 @@ const DRINKS_DB = [
         name: "Strawberry Matcha Latte",
         price: "€7.20",
         type: "special",
+        image: "images/strawberry_matcha.png",
         tags: {
             temp: ["iced", "any"],
             base: ["matcha", "surprise"],
@@ -68,6 +72,7 @@ const DRINKS_DB = [
         name: "Mango Matcha Latte",
         price: "€7.20",
         type: "special",
+        image: "images/mango_matcha.png",
         tags: {
             temp: ["iced", "any"],
             base: ["matcha", "surprise"],
@@ -83,6 +88,7 @@ const DRINKS_DB = [
         name: "Tiramisu Hojicha Latte",
         price: "€7.20",
         type: "special",
+        image: "images/tiramisu_hojicha.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["hojicha", "surprise"],
@@ -98,6 +104,7 @@ const DRINKS_DB = [
         name: "Sticky Marshmallow Choco",
         price: "€7.20",
         type: "special",
+        image: "images/marshmallow_hojicha.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["surprise", "hojicha"], 
@@ -115,6 +122,7 @@ const DRINKS_DB = [
         name: "Matcha Latte",
         price: "€6.50",
         type: "daily",
+        image: "images/matcha_latte.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["matcha"],
@@ -130,6 +138,7 @@ const DRINKS_DB = [
         name: "Hojicha Latte",
         price: "€5.70",
         type: "daily",
+        image: "images/hojicha_latte.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["hojicha"],
@@ -145,6 +154,7 @@ const DRINKS_DB = [
         name: "Kocha Latte",
         price: "€5.70",
         type: "daily",
+        image: "images/kocha_latte.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["matcha", "hojicha", "surprise"], // Black tea
@@ -160,6 +170,7 @@ const DRINKS_DB = [
         name: "Matcha Tea",
         price: "€6.20",
         type: "daily",
+        image: "images/matcha_tea.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["matcha"],
@@ -175,6 +186,7 @@ const DRINKS_DB = [
         name: "Hojicha / Kocha / Sencha Tea",
         price: "€4.20",
         type: "daily",
+        image: "images/sencha_tea.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["hojicha", "surprise"],
@@ -192,6 +204,7 @@ const DRINKS_DB = [
         name: "Iced Latte",
         price: "€4.50",
         type: "coffee",
+        image: "images/iced_latte.png",
         tags: {
             temp: ["iced", "any"],
             base: ["coffee"],
@@ -207,6 +220,7 @@ const DRINKS_DB = [
         name: "Flat White",
         price: "€4.20",
         type: "coffee",
+        image: "images/flat_white.png",
         tags: {
             temp: ["hot", "any"],
             base: ["coffee"],
@@ -222,6 +236,7 @@ const DRINKS_DB = [
         name: "Iced Americano",
         price: "€3.70",
         type: "coffee",
+        image: "images/iced_americano.png",
         tags: {
             temp: ["iced", "any"],
             base: ["coffee"],
@@ -237,6 +252,7 @@ const DRINKS_DB = [
         name: "Cortado",
         price: "€3.70",
         type: "coffee",
+        image: "images/cortado.png",
         tags: {
             temp: ["hot", "any"],
             base: ["coffee"],
@@ -469,6 +485,14 @@ function calculateScores() {
 }
 
 function renderResultUI(drink, backups) {
+    const winnerImg = document.getElementById('winner-image');
+    if (drink.image) {
+        winnerImg.src = drink.image;
+        winnerImg.classList.remove('hidden');
+    } else {
+        winnerImg.classList.add('hidden');
+    }
+
     document.getElementById('winner-name').textContent = drink.name;
     document.getElementById('winner-price').textContent = drink.price;
     document.getElementById('winner-desc').textContent = drink.desc;
