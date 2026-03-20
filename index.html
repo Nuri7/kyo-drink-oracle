@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KYŌ Drink Oracle</title>
+    <!-- Google Fonts: Noto Sans JP for that modern Japanese minimalist feel, Inter for clean UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Decor (Light matcha clouds/gradients) -->
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+    <div class="bg-shape bg-shape-3"></div>
+
+    <div id="app-container">
+        
+        <!-- ==================== HOME SCREEN ==================== -->
+        <main id="home-screen" class="screen active fade-in">
+            <div class="home-content">
+                <div class="emoji-logo">🍵✨</div>
+                <h1 class="title">KYŌ Drink Oracle</h1>
+                <p class="subtitle">Find your perfect match from the KYŌ-KLUB menu.</p>
+                
+                <div class="info-card glass-panel">
+                    <p><strong>6 quick questions.</strong></p>
+                    <p>Unlock everything from your daily buzz to our secret clouds ☁️.</p>
+                </div>
+                
+                <button id="start-btn" class="btn btn-primary pulse-anim">Discover My Drink</button>
+            </div>
+            <div class="footer">Kinkerstraat 94, Amsterdam ・ 100% Matcha Vibes</div>
+        </main>
+
+        <!-- ==================== QUIZ SCREEN ==================== -->
+        <main id="quiz-screen" class="screen hidden">
+            <div class="quiz-header">
+                <div class="progress-info">
+                    <span>Question <span id="current-q-num">1</span> of 6</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="question-wrapper slide-up">
+                <h2 id="question-text" class="question-text">Question goes here?</h2>
+                <div id="options-container" class="options-grid">
+                    <!-- Options injected by JS -->
+                </div>
+            </div>
+
+            <div class="quiz-footer">
+                <button id="next-btn" class="btn btn-primary" disabled>Next</button>
+            </div>
+        </main>
+
+        <!-- ==================== RESULT SCREEN ==================== -->
+        <main id="result-screen" class="screen hidden">
+            <div class="result-header fade-in">
+                <div id="result-emoji" class="result-emoji">🏆</div>
+                <h2 class="result-title">Your Perfect Match</h2>
+                <p id="result-fun-msg" class="fun-msg">Your umami soul needs this!</p>
+            </div>
+            
+            <div class="winner-card glass-panel slide-up">
+                <div class="winner-main">
+                    <h1 id="winner-name" class="drink-name">Matcha Latte</h1>
+                    <span id="winner-price" class="drink-price">€6.50</span>
+                </div>
+                <div class="winner-tags" id="winner-tags">
+                    <!-- Tags like Hot, Iced -->
+                </div>
+                <p id="winner-desc" class="drink-desc">Umami, standard, delicious.</p>
+                <div class="why-divider"></div>
+                <div class="why-fits">
+                    <h3>✨ Why it fits:</h3>
+                    <p id="winner-reason">Because you love earthy vibes and classic drinks.</p>
+                </div>
+            </div>
+
+            <div class="extras-grid fade-in-delayed">
+                <div class="customizations-card glass-panel-sm">
+                    <h3>💡 Level it up</h3>
+                    <ul id="custom-list">
+                        <!-- Customizations -->
+                    </ul>
+                </div>
+
+                <div class="backups-card glass-panel-sm">
+                    <h3>🥈 Runner-ups</h3>
+                    <ul id="backup-list" class="backup-list">
+                        <!-- Backups -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-section fade-in-delayed">
+                <p class="cta-text">Show this to our barista at <strong>KYŌ-KLUB</strong>!</p>
+                <div class="action-buttons">
+                    <button id="share-btn" class="btn btn-secondary">Copy Result 📝</button>
+                    <button id="restart-btn" class="btn btn-outline">Retake Quiz ↺</button>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Toast Notification (for sharing) -->
+    <div id="toast" class="toast">Result copied to clipboard!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
