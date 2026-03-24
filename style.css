@@ -285,7 +285,8 @@ h1, h2, h3 { font-family: var(--font-heading); }
 }
 .option-card.selected::before { border-width: 6px; border-color: var(--matcha-green); }
 
-.quiz-footer { margin-top: auto; padding-top: 2rem; }
+.quiz-footer { margin-top: auto; padding-top: 2rem; display: flex; gap: 1rem; }
+.quiz-footer .btn { flex: 1; padding: 1rem; }
 
 /* ------------------- Result Screen ------------------- */
 .result-header { text-align: center; margin-bottom: 2rem; }

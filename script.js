@@ -347,6 +347,7 @@ const screens = {
 const dom = {
     startBtn: document.getElementById('start-btn'),
     nextBtn: document.getElementById('next-btn'),
+    backBtn: document.getElementById('back-btn'),
     restartBtn: document.getElementById('restart-btn'),
     shareBtn: document.getElementById('share-btn'),
     
@@ -377,6 +378,20 @@ function init() {
         userAnswers = {};
         switchScreen('quiz');
         renderQuestion();
+    });
+
+    dom.backBtn.addEventListener('click', () => {
+        // Simple transition reset
+        dom.qText.parentElement.classList.remove('slide-up');
+        void dom.qText.parentElement.offsetWidth;
+        dom.qText.parentElement.classList.add('slide-up');
+        
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderQuestion();
+        } else {
+            switchScreen('home');
+        }
     });
 
     dom.nextBtn.addEventListener('click', () => {
