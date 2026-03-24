@@ -588,7 +588,7 @@ function renderQuestion() {
     q.options.forEach((opt, idx) => {
         const card = document.createElement('div');
         card.className = 'option-card';
-        card.innerHTML = `<span style="flex: 1; text-align: left;">${opt.text}</span><span style="font-size: 2.8rem; margin-left: 15px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); transform: translateY(-3px);">${opt.icon}</span>`;
+        card.innerHTML = `<span style="font-size: 4rem; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.15)); margin-bottom: 10px; transition: transform 0.3s ease;">${opt.icon}</span><span style="color: var(--text-main); line-height: 1.3;">${opt.text}</span>`;
         
         if (userAnswers[q.id] && Object.values(opt.tags)[0] === userAnswers[q.id]) {
             card.classList.add('selected');
