@@ -1,28 +1,28 @@
-const CACHE_NAME = 'kyo-oracle-v14';
+const CACHE_NAME = 'kyo-oracle-v15';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './style.css',
   './script.js',
   './manifest.json',
-  './images/icon-192.png',
-  './images/icon-512.png',
-  './images/cold_foam_matcha.png',
-  './images/matcha_soda.png',
-  './images/coconut_cloud_matcha.png',
-  './images/strawberry_matcha.png',
-  './images/mango_matcha.png',
-  './images/tiramisu_hojicha.png',
-  './images/marshmallow_hojicha.png',
-  './images/matcha_latte.png',
-  './images/hojicha_latte.png',
-  './images/kocha_latte.png',
-  './images/matcha_tea.png',
-  './images/sencha_tea.png',
-  './images/iced_latte.png',
-  './images/flat_white.png',
-  './images/iced_americano.png',
-  './images/cortado.png'
+  './images/icons/icon-192.png',
+  './images/icons/icon-512.png',
+  './images/cold drinks/cold_foam_matcha.png',
+  './images/cold drinks/matcha_soda.png',
+  './images/cold drinks/coconut_cloud_matcha.png',
+  './images/cold drinks/strawberry_matcha.png',
+  './images/cold drinks/mango_matcha.png',
+  './images/cold drinks/tiramisu_hojicha.png',
+  './images/cold drinks/marshmallow_hojicha.png',
+  './images/cold drinks/matcha_latte.png',
+  './images/cold drinks/hojicha_latte.png',
+  './images/cold drinks/kocha_latte.png',
+  './images/cold drinks/matcha_tea.png',
+  './images/cold drinks/sencha_tea.png',
+  './images/cold drinks/iced_latte.png',
+  './images/hot drinks/flat_white.png',
+  './images/cold drinks/iced_americano.png',
+  './images/hot drinks/cortado.png'
 ];
 
 self.addEventListener('install', event => {
