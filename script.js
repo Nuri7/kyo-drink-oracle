@@ -5,20 +5,84 @@
 const DRINKS_DB = [
     // --- SPECIALS ---
     {
-        name: "Cold Foam Matcha Latte",
+        name: "Strawberry Cold Foam Matcha",
         price: "€7.20",
         type: "special",
-        image: "images/cold_foam_matcha.png",
+        image: "images/cold_foam_strawberry.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
-            sweetness: ["high", "medium"],
-            texture: ["foamy", "standard"],
-            flavor: ["floral", "fruity", "classic"], // Clouds can be Lavender, Jasmine, Strawberry
-            mood: ["indulgent", "energizing"]
+            sweetness: ["high"],
+            texture: ["foamy"],
+            flavor: ["fruity"],
+            mood: ["indulgent"]
         },
-        desc: "Umami, foamy, slightly sweet.",
-        customs: ["Choose a cloud: Lavender (floral), Jasmine (floral), or Strawberry (fruity)", "Oat milk base included"]
+        desc: "Sweet, vibrant, and incredibly foamy.",
+        customs: ["Oat milk base included"]
+    },
+    {
+        name: "Vanilla Cold Foam Matcha",
+        price: "€7.20",
+        type: "special",
+        image: "images/cold_foam_vanilla.png",
+        tags: {
+            temp: ["iced"],
+            base: ["matcha", "surprise"],
+            sweetness: ["high"],
+            texture: ["foamy"],
+            flavor: ["dessert"],
+            mood: ["indulgent"]
+        },
+        desc: "Rich vanilla bean cloud over earthy matcha.",
+        customs: ["Oat milk base included"]
+    },
+    {
+        name: "Jasmine Cold Foam Matcha",
+        price: "€7.20",
+        type: "special",
+        image: "images/cold_foam_jasmine.png",
+        tags: {
+            temp: ["iced"],
+            base: ["matcha", "surprise"],
+            sweetness: ["medium"],
+            texture: ["foamy"],
+            flavor: ["floral"],
+            mood: ["relaxed"]
+        },
+        desc: "A delicate jasmine cloud over iced umami matcha.",
+        customs: ["Oat milk base included", "Balanced sweetness"]
+    },
+    {
+        name: "Lavender Cold Foam Matcha",
+        price: "€7.20",
+        type: "special",
+        image: "images/cold_foam_lavender.png",
+        tags: {
+            temp: ["iced"],
+            base: ["matcha", "surprise"],
+            sweetness: ["medium"],
+            texture: ["foamy"],
+            flavor: ["floral"],
+            mood: ["relaxed"]
+        },
+        desc: "Calming pastel lavender foam perfectly balanced.",
+        customs: ["Oat milk base included"]
+    },
+    {
+        name: "Rose Cold Foam Matcha",
+        price: "€7.20",
+        type: "special",
+        image: "images/cold_foam_rose.png",
+        tags: {
+            temp: ["iced"],
+            base: ["matcha", "surprise"],
+            sweetness: ["low", "medium"],
+            texture: ["foamy", "refreshing"],
+            flavor: ["floral"],
+            mood: ["energizing"]
+        },
+        desc: "Fresh, aromatic pale pink rose cold foam.",
+        customs: ["Oat milk base included"]
     },
     {
         name: "Matcha Soda",
