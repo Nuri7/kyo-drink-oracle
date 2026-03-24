@@ -327,20 +327,36 @@ const DRINKS_DB = [
         customs: ["No milk, pure umami focus"]
     },
     {
-        name: "Hojicha / Kocha / Sencha Tea",
+        name: "Hot Hojicha Tea",
         price: "€4.20",
         type: "daily",
-        image: "images/sencha_tea.png",
+        image: "images/hojicha_hot_tea.png",
         tags: {
-            temp: ["hot", "iced", "any"],
-            base: ["hojicha", "surprise"],
+            temp: ["hot", "any"],
+            base: ["hojicha"],
+            sweetness: ["low"],
+            texture: ["refreshing"],
+            flavor: ["dessert", "classic"],
+            mood: ["relaxed"]
+        },
+        desc: "Deeply comforting hot roasted green tea with natural nutty caramel notes.",
+        customs: ["Brewed in a traditional kyusu."]
+    },
+    {
+        name: "Hot Kocha Tea",
+        price: "€4.20",
+        type: "daily",
+        image: "images/kocha_hot_tea.png",
+        tags: {
+            temp: ["hot", "any"],
+            base: ["surprise"],
             sweetness: ["low"],
             texture: ["refreshing"],
             flavor: ["classic"],
-            mood: ["relaxed"]
+            mood: ["relaxed", "energizing"]
         },
-        desc: "Brewed to perfection for a light, hydrating sip.",
-        customs: []
+        desc: "Comforting, smooth Japanese black tea.",
+        customs: ["Brewed in a traditional kyusu."]
     },
 
     // --- COFFEE (Representative samples for matching) ---
