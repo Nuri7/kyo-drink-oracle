@@ -432,7 +432,7 @@ function renderQuestion() {
     q.options.forEach((opt, idx) => {
         const card = document.createElement('div');
         card.className = 'option-card';
-        card.innerHTML = `<span style="font-size: 1.5rem; margin-right: 12px;">${opt.icon}</span> ${opt.text}`;
+        card.innerHTML = `<span style="font-size: 2rem; margin-right: 16px; vertical-align: middle;">${opt.icon}</span> <span style="vertical-align: middle;">${opt.text}</span>`;
         
         // Restore prev selection if user went back (optional to implement back btn later)
         if (userAnswers[q.id] && Object.values(opt.tags)[0] === userAnswers[q.id]) {
