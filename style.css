@@ -239,7 +239,7 @@ h1, h2, h3 { font-family: var(--font-heading); }
     gap: 2rem;
 }
 .emoji-logo { font-size: 5rem; line-height: 1; }
-.klub-title { font-size: 3rem; font-weight: 900; color: var(--matcha-dark); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem; }
+.klub-title { font-family: var(--font-body); font-size: 3rem; font-weight: 900; color: var(--matcha-dark); letter-spacing: 2px; margin-bottom: 1rem; }
 .title { font-size: 2.5rem; font-weight: 900; color: var(--matcha-dark); }
 .subtitle { font-size: 1.1rem; color: var(--text-light); margin-top: -1rem; }
 
