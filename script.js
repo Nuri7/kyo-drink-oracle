@@ -449,8 +449,7 @@ const QUESTIONS = [
         weight: 0.20,
         options: [
             { text: "Hot & cozy", tags: { temp: "hot" }, icon: "🔥" },
-            { text: "Iced & refreshing", tags: { temp: "iced" }, icon: "🧊" },
-            { text: "No preference", tags: { temp: "any" }, icon: "🤷" }
+            { text: "Iced & refreshing", tags: { temp: "iced" }, icon: "🧊" }
         ]
     },
     {
