@@ -244,22 +244,22 @@ h1, h2, h3 { font-family: var(--font-heading); }
 
 .drink-marquee-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 800px;
     overflow: hidden;
     position: relative;
-    padding: 1rem 0;
+    padding: 2rem 0;
     -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
     mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
 .drink-marquee {
     display: flex;
     width: max-content;
-    animation: scrollMarquee 15s linear infinite;
-    gap: 1rem;
+    animation: scrollMarquee 20s linear infinite;
+    gap: 2rem;
 }
 .drink-marquee img {
-    width: 70px;
-    height: 70px;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
     border-radius: 50%;
     box-shadow: var(--shadow-soft);
@@ -267,7 +267,7 @@ h1, h2, h3 { font-family: var(--font-heading); }
 }
 @keyframes scrollMarquee { 
     0% { transform: translateX(0); } 
-    100% { transform: translateX(calc(-50% - 0.5rem)); } 
+    100% { transform: translateX(calc(-50% - 1rem)); } 
 }
 
 .footer { text-align: center; margin-top: auto; padding-top: 2rem; color: var(--text-light); font-size: 0.85rem; letter-spacing: 0.5px; opacity: 0.7; }
@@ -385,11 +385,9 @@ h1, h2, h3 { font-family: var(--font-heading); }
 @media (max-height: 850px) and (orientation: landscape) {
     #app-container { padding: 1rem 1.5rem; justify-content: center; }
     .home-content { gap: 1rem; }
-    .emoji-logo { font-size: 3.5rem; }
-    .title { font-size: 2rem; }
-    .subtitle { margin-top: -0.5rem; font-size: 1rem; }
-    .drink-marquee-container { padding: 0.5rem 0; }
-    .drink-marquee img { width: 55px; height: 55px; }
+    .drink-marquee-container { padding: 1rem 0; }
+    .drink-marquee { gap: 1.5rem; }
+    .drink-marquee img { width: 140px; height: 140px; }
     .quiz-header { margin-bottom: 1.5rem; }
     .question-text { font-size: 1.5rem; margin-bottom: 1.25rem; }
     .options-grid { margin-bottom: 1.5rem; gap: 0.75rem; }
