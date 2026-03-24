@@ -104,17 +104,65 @@ const DRINKS_DB = [
         name: "Coconut Cloud Matcha",
         price: "€7.20",
         type: "special",
-        image: "images/coconut_cloud_matcha.png",
+        image: "images/coconut_cloud_classic.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
-            sweetness: ["medium", "high"],
+            sweetness: ["medium", "low"],
             texture: ["foamy", "refreshing"],
-            flavor: ["coconut", "floral"],
+            flavor: ["floral", "classic"],
+            mood: ["relaxed"]
+        },
+        desc: "Fresh, creamy, and deeply refreshing umami.",
+        customs: ["Classic white coconut cloud"]
+    },
+    {
+        name: "Mango Coconut Cloud",
+        price: "€7.20",
+        type: "special",
+        image: "images/coconut_cloud_mango.png",
+        tags: {
+            temp: ["iced"],
+            base: ["matcha", "surprise"],
+            sweetness: ["medium"],
+            texture: ["foamy"],
+            flavor: ["fruity"],
+            mood: ["indulgent", "energizing"]
+        },
+        desc: "Fruity, perfectly balanced tropical bliss.",
+        customs: ["Contains real mango purée"]
+    },
+    {
+        name: "Banana Coconut Cloud",
+        price: "€7.20",
+        type: "special",
+        image: "images/coconut_cloud_banana.png",
+        tags: {
+            temp: ["iced"],
+            base: ["matcha", "surprise"],
+            sweetness: ["high"],
+            texture: ["foamy"],
+            flavor: ["fruity"],
+            mood: ["indulgent"]
+        },
+        desc: "Sweet, rich, and decadently fruity.",
+        customs: ["A luscious banana cloud"]
+    },
+    {
+        name: "Orgeade Coconut Cloud",
+        price: "€7.20",
+        type: "special",
+        image: "images/coconut_cloud_orgeade.png",
+        tags: {
+            temp: ["iced"],
+            base: ["matcha", "surprise"],
+            sweetness: ["medium"],
+            texture: ["foamy"],
+            flavor: ["dessert"],
             mood: ["relaxed", "indulgent"]
         },
-        desc: "Umami, refreshing, tropical vibe.",
-        customs: ["Already has a coconut cloud ✨"]
+        desc: "Almond-infused, beautifully balanced umami magic.",
+        customs: ["Garnished with crushed almonds"]
     },
     {
         name: "Strawberry Matcha Latte",
