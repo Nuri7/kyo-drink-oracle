@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kyo-oracle-v15';
+const CACHE_NAME = 'kyo-oracle-v17';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -8,21 +8,21 @@ const ASSETS_TO_CACHE = [
   './images/icons/icon-192.png',
   './images/icons/icon-512.png',
   './images/cold drinks/cold_foam_matcha.png',
-  './images/cold drinks/matcha_soda.png',
+  './images/cold drinks/earthy/natural/refreshing/classic/energizing/matcha_soda.png',
   './images/cold drinks/coconut_cloud_matcha.png',
-  './images/cold drinks/strawberry_matcha.png',
-  './images/cold drinks/mango_matcha.png',
-  './images/cold drinks/tiramisu_hojicha.png',
-  './images/cold drinks/marshmallow_hojicha.png',
-  './images/cold drinks/matcha_latte.png',
+  './images/cold drinks/earthy/sweet/standard/fruity/indulgent/strawberry_matcha.png',
+  './images/cold drinks/earthy/sweet/standard/fruity/indulgent/mango_matcha.png',
+  './images/cold drinks/nutty_roasty/sweet/foamy/dessert/indulgent/tiramisu_hojicha.png',
+  './images/cold drinks/surprise/sweet/foamy/dessert/indulgent/marshmallow_hojicha.png',
+  './images/cold drinks/earthy/balanced/standard/classic/energizing/matcha_latte.png',
   './images/cold drinks/hojicha_latte.png',
-  './images/cold drinks/kocha_latte.png',
-  './images/cold drinks/matcha_tea.png',
+  './images/cold drinks/earthy/balanced/standard/classic/energizing/kocha_latte.png',
+  './images/cold drinks/earthy/natural/refreshing/classic/energizing/matcha_tea.png',
   './images/cold drinks/sencha_tea.png',
-  './images/cold drinks/iced_latte.png',
-  './images/hot drinks/flat_white.png',
-  './images/cold drinks/iced_americano.png',
-  './images/hot drinks/cortado.png'
+  './images/cold drinks/coffee/balanced/standard/classic/energizing/iced_latte.png',
+  './images/hot drinks/coffee/natural/standard/classic/energizing/flat_white.png',
+  './images/cold drinks/coffee/natural/refreshing/classic/energizing/iced_americano.png',
+  './images/hot drinks/coffee/natural/standard/classic/energizing/cortado.png'
 ];
 
 self.addEventListener('install', event => {
