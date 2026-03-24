@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kyo-oracle-v12';
+const CACHE_NAME = 'kyo-oracle-v13';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

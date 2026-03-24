@@ -247,20 +247,52 @@ const DRINKS_DB = [
         customs: ["Add Vanilla SF (+€0.50) for a touch of sweetness", "Add +€0.50 Sproud milk"]
     },
     {
-        name: "Hojicha Latte",
-        price: "€5.70",
-        type: "daily",
-        image: "images/hojicha_latte.png",
+        name: "Hojicha Vanilla Cold Foam",
+        price: "€7.20",
+        type: "special",
+        image: "images/hojicha_vanilla_coldfoam.png",
         tags: {
-            temp: ["hot", "iced", "any"],
-            base: ["hojicha"],
-            sweetness: ["medium", "low"],
+            temp: ["iced"],
+            base: ["hojicha", "surprise"],
+            sweetness: ["high"],
+            texture: ["foamy"],
+            flavor: ["dessert"],
+            mood: ["indulgent"]
+        },
+        desc: "Sweet, nutty hojicha beneath a rich vanilla cloud.",
+        customs: ["Vanilla bean cold foam included"]
+    },
+    {
+        name: "Hojicha Lavender Cold Foam",
+        price: "€7.20",
+        type: "special",
+        image: "images/hojicha_latte_lavender_coldfoam.png",
+        tags: {
+            temp: ["iced"],
+            base: ["hojicha", "surprise"],
+            sweetness: ["medium"],
+            texture: ["foamy"],
+            flavor: ["floral", "classic"],
+            mood: ["relaxed"]
+        },
+        desc: "Perfectly balanced roasty hojicha with calming lavender.",
+        customs: ["Lavender seeds garnish"]
+    },
+    {
+        name: "Iced Creamy Hojicha",
+        price: "€6.50",
+        type: "special",
+        image: "images/hojicha_iced_creamy.png",
+        tags: {
+            temp: ["iced"],
+            base: ["hojicha", "surprise"],
+            sweetness: ["medium", "high"],
             texture: ["standard"],
             flavor: ["classic", "dessert"],
             mood: ["relaxed", "indulgent"]
         },
-        desc: "Nutty, roasty, low-caffeine comfort.",
-        customs: ["Add Caramel (+€0.50) to enhance the roast!"]
+        desc: "Rich, creamy, swirling roasted umami.",
+        customs: ["Extra creamy oat milk blend"]
     },
     {
         name: "Kocha Latte",

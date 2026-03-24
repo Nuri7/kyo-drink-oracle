@@ -255,7 +255,7 @@ h1, h2, h3 { font-family: var(--font-heading); }
 .drink-marquee {
     display: flex;
     width: max-content;
-    animation: scrollMarquee 35s linear infinite;
+    animation: scrollMarquee 45s linear infinite;
     gap: 2rem;
 }
 .drink-marquee img {
