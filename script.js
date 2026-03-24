@@ -525,7 +525,6 @@ const dom = {
     nextBtn: document.getElementById('next-btn'),
     backBtn: document.getElementById('back-btn'),
     restartBtn: document.getElementById('restart-btn'),
-    shareBtn: document.getElementById('share-btn'),
     
     qNum: document.getElementById('current-q-num'),
     qProgress: document.getElementById('progress-fill'),
@@ -586,8 +585,6 @@ function init() {
     dom.restartBtn.addEventListener('click', () => {
         switchScreen('home');
     });
-
-    dom.shareBtn.addEventListener('click', shareResult);
 }
 
 function renderQuestion() {
@@ -686,7 +683,6 @@ function renderResultUI(drink, backups) {
 
     document.getElementById('winner-name').textContent = drink.name;
     document.getElementById('winner-price').textContent = drink.price;
-    document.getElementById('winner-desc').textContent = drink.desc;
 
     // Reason generation
     const reasons = [];
@@ -698,52 +694,6 @@ function renderResultUI(drink, backups) {
     if (userAnswers.flavor === 'fruity') reasons.push("the fruity twist is top tier");
     
     document.getElementById('winner-reason').textContent = `Because you asked for something ${userAnswers.flavor === 'dessert' ? 'indulgent' : 'special'}, and ${reasons[0] ? reasons.join(' and ') : 'it just fits your vibe perfectly'}!`;
-
-    // Fun messages based on base
-    const messages = {
-        matcha: "Your umami soul needs this! 🍵✨",
-        hojicha: "Roasty, toasty, and perfect for you! 🍂✨",
-        coffee: "That classic caffeine hit you ordered! ☕💥",
-        surprise: "We pulled out all the stops for you! 🎉✨"
-    };
-    document.getElementById('result-fun-msg').textContent = messages[userAnswers.base] || "A perfect match! 🏆✨";
-
-    // Tags rendering
-    const tagsContainer = document.getElementById('winner-tags');
-    tagsContainer.innerHTML = '';
-    if(userAnswers.temp !== 'any') {
-        const t = document.createElement('span');
-        t.className = `tag ${userAnswers.temp}`;
-        t.textContent = userAnswers.temp;
-        tagsContainer.appendChild(t);
-    }
-    const bt = document.createElement('span');
-    bt.className = `tag`;
-    bt.textContent = drink.type;
-    tagsContainer.appendChild(bt);
-
-    // Customizations
-    const customList = document.getElementById('custom-list');
-    customList.innerHTML = '';
-    if (drink.customs.length === 0) {
-        customList.innerHTML = "<li>Perfect straight up! No notes.</li>";
-    } else {
-        drink.customs.forEach(c => {
-            const li = document.createElement('li');
-            li.textContent = c;
-            customList.appendChild(li);
-        });
-    }
-
-    // Backups
-    const fallbackList = document.getElementById('backup-list');
-    fallbackList.innerHTML = '';
-    backups.forEach(b => {
-        const div = document.createElement('div');
-        div.className = 'backup-item';
-        div.innerHTML = `<span class="backup-name">${b.name}</span><span class="backup-price">${b.price}</span>`;
-        fallbackList.appendChild(div);
-    });
 }
 
 function shareResult() {
