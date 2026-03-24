@@ -239,6 +239,7 @@ h1, h2, h3 { font-family: var(--font-heading); }
     gap: 2rem;
 }
 .emoji-logo { font-size: 5rem; line-height: 1; }
+.klub-title { font-size: 3rem; font-weight: 900; color: var(--matcha-dark); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem; }
 .title { font-size: 2.5rem; font-weight: 900; color: var(--matcha-dark); }
 .subtitle { font-size: 1.1rem; color: var(--text-light); margin-top: -1rem; }
 
@@ -385,6 +386,7 @@ h1, h2, h3 { font-family: var(--font-heading); }
 @media (max-height: 850px) and (orientation: landscape) {
     #app-container { padding: 1rem 1.5rem; justify-content: center; }
     .home-content { gap: 1rem; }
+    .klub-title { font-size: 2.2rem; margin-bottom: 0.5rem; }
     .drink-marquee-container { padding: 1rem 0; }
     .drink-marquee { gap: 1.5rem; }
     .drink-marquee img { width: 140px; height: 140px; }
