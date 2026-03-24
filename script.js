@@ -569,19 +569,6 @@ function init() {
         }
     });
 
-    dom.nextBtn.addEventListener('click', () => {
-        currentQuestionIndex++;
-        if (currentQuestionIndex < QUESTIONS.length) {
-            // Animate transition
-            dom.qText.parentElement.classList.remove('slide-up');
-            void dom.qText.parentElement.offsetWidth; // reset anim
-            dom.qText.parentElement.classList.add('slide-up');
-            renderQuestion();
-        } else {
-            generateResult();
-        }
-    });
-
     dom.restartBtn.addEventListener('click', () => {
         switchScreen('home');
     });
@@ -599,28 +586,34 @@ function renderQuestion() {
     dom.qText.textContent = q.text;
     dom.optionsContainer.innerHTML = '';
     
-    // Disable next button until selection
-    dom.nextBtn.disabled = true;
-
     q.options.forEach((opt, idx) => {
         const card = document.createElement('div');
         card.className = 'option-card';
         card.innerHTML = `<span style="font-size: 2.5rem; margin-right: 20px; vertical-align: middle;">${opt.icon}</span> <span style="vertical-align: middle;">${opt.text}</span>`;
         
-        // Restore prev selection if user went back (optional to implement back btn later)
         if (userAnswers[q.id] && Object.values(opt.tags)[0] === userAnswers[q.id]) {
             card.classList.add('selected');
-            dom.nextBtn.disabled = false;
         }
 
         card.addEventListener('click', () => {
-            // Remove selection from siblings
+            if (card.classList.contains('selected')) return;
+
             document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
             card.classList.add('selected');
             
-            // Save answer mapping
             userAnswers[q.id] = Object.values(opt.tags)[0];
-            dom.nextBtn.disabled = false;
+            
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < QUESTIONS.length) {
+                    dom.qText.parentElement.classList.remove('slide-up');
+                    void dom.qText.parentElement.offsetWidth; 
+                    dom.qText.parentElement.classList.add('slide-up');
+                    renderQuestion();
+                } else {
+                    generateResult();
+                }
+            }, 300);
         });
 
         dom.optionsContainer.appendChild(card);
