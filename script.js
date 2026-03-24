@@ -458,9 +458,8 @@ const QUESTIONS = [
         weight: 0.30,
         options: [
             { text: "Earthy umami Matcha", tags: { base: "matcha" }, icon: "🍵" },
-            { text: "Nutty/roasty Hojicha", tags: { base: "hojicha" }, icon: "🍂" },
-            { text: "Classic coffee kick", tags: { base: "coffee" }, icon: "☕" },
-            { text: "Surprise me with a special", tags: { base: "surprise" }, icon: "✨" }
+            { text: "Nutty roasty Hojicha", tags: { base: "hojicha" }, icon: "🍂" },
+            { text: "Classic Coffee", tags: { base: "coffee" }, icon: "☕" }
         ]
     },
     {
