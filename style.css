@@ -240,37 +240,58 @@ h1, h2, h3 { font-family: var(--font-heading); }
     text-align: center;
     gap: 2rem;
 }
+
+/* Home Button override for premium pill feel */
+.home-content .btn-primary {
+    max-width: 400px;
+    margin: 0 auto;
+    font-size: 1.25rem;
+    padding: 1.25rem 2.5rem;
+    box-shadow: 0 10px 30px var(--matcha-glow);
+}
+
 .emoji-logo { font-size: 5rem; line-height: 1; }
-.klub-title { font-family: var(--font-body); font-size: 3rem; font-weight: 900; color: var(--matcha-dark); letter-spacing: 2px; margin-bottom: 1rem; }
+.klub-title { font-family: var(--font-body); font-size: 3.5rem; font-weight: 900; color: var(--matcha-dark); letter-spacing: 2px; margin-bottom: 0.5rem; text-shadow: 0 4px 15px rgba(92, 107, 56, 0.2); }
 .title { font-size: 2.5rem; font-weight: 900; color: var(--matcha-dark); }
 .subtitle { font-size: 1.1rem; color: var(--text-light); margin-top: -1rem; }
 
 .drink-marquee-container {
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
     overflow: hidden;
     position: relative;
     padding: 2rem 0;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.drink-marquee-container:hover .drink-marquee {
+    animation-play-state: paused;
 }
 .drink-marquee {
     display: flex;
     width: max-content;
-    animation: scrollMarquee 45s linear infinite;
-    gap: 2rem;
+    animation: scrollMarquee 55s linear infinite;
+    gap: 2.5rem;
+    align-items: center;
 }
 .drink-marquee img {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 300px;
     object-fit: cover;
-    border-radius: 50%;
-    box-shadow: var(--shadow-soft);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
     border: 3px solid rgba(255,255,255,0.7);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
 }
+.drink-marquee img:hover {
+    transform: scale(1.08) translateY(-5px);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+}
+
 @keyframes scrollMarquee { 
     0% { transform: translateX(0); } 
-    100% { transform: translateX(calc(-50% - 1rem)); } 
+    100% { transform: translateX(calc(-50% - 1.25rem)); } 
 }
 
 .footer { text-align: center; margin-top: auto; padding-top: 2rem; color: var(--text-light); font-size: 0.85rem; letter-spacing: 0.5px; opacity: 0.7; }
@@ -424,7 +445,7 @@ h1, h2, h3 { font-family: var(--font-heading); }
     .klub-title { font-size: 2.2rem; margin-bottom: 0.5rem; }
     .drink-marquee-container { padding: 1rem 0; }
     .drink-marquee { gap: 1.5rem; }
-    .drink-marquee img { width: 140px; height: 140px; }
+    .drink-marquee img { width: 170px; height: 230px; }
     .quiz-header { margin-bottom: 1.5rem; }
     .question-text { font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center; }
     .options-grid { margin-bottom: 1.5rem; gap: 1rem; }
