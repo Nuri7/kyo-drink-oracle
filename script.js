@@ -448,8 +448,8 @@ const QUESTIONS = [
         text: "Temperature preference today?",
         weight: 0.20,
         options: [
-            { text: "Hot & cozy", tags: { temp: "hot" }, icon: "🔥" },
-            { text: "Iced & refreshing", tags: { temp: "iced" }, icon: "🧊" }
+            { text: "Hot & cozy", tags: { temp: "hot" }, icon: "🔥", image: "images/hot_drinks/nutty_roasty/natural/refreshing/dessert/chill/hojicha_hot_tea.png" },
+            { text: "Iced & refreshing", tags: { temp: "iced" }, icon: "🧊", image: "images/cold_drinks/earthy/sweet/foamy/fruity/indulgent/iced_cold_foam_strawberry.png" }
         ]
     },
     {
@@ -457,9 +457,9 @@ const QUESTIONS = [
         text: "Main flavor base?",
         weight: 0.30,
         options: [
-            { text: "Earthy umami Matcha", tags: { base: "matcha" }, icon: "🍵" },
-            { text: "Nutty roasty Hojicha", tags: { base: "hojicha" }, icon: "🍂" },
-            { text: "Classic Coffee", tags: { base: "coffee" }, icon: "☕" }
+            { text: "Earthy umami Matcha", tags: { base: "matcha" }, icon: "🍵", image: "images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_foam_jasmine.png" },
+            { text: "Nutty roasty Hojicha", tags: { base: "hojicha" }, icon: "🍂", image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png" },
+            { text: "Classic Coffee", tags: { base: "coffee" }, icon: "☕", image: "images/cold_drinks/coffee/balanced/foamy/classic/energizing/iced_americano_matcha_foam.png" }
         ]
     },
     {
@@ -467,9 +467,9 @@ const QUESTIONS = [
         text: "Sweetness level?",
         weight: 0.15,
         options: [
-            { text: "Sweet dessert vibes (fruity or indulgent)", tags: { sweetness: "high" }, icon: "🍰" },
-            { text: "Lightly balanced", tags: { sweetness: "medium" }, icon: "🍯" },
-            { text: "Natural / barely sweet (umami focus)", tags: { sweetness: "low" }, icon: "🌿" }
+            { text: "Sweet dessert vibes (fruity or indulgent)", tags: { sweetness: "high" }, icon: "🍰", image: "images/cold_drinks/earthy/sweet/foamy/dessert/indulgent/iced_cold_foam_vanilla.png" },
+            { text: "Lightly balanced", tags: { sweetness: "medium" }, icon: "🍯", image: "images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_coconut_cloud_matcha.png" },
+            { text: "Natural / barely sweet (umami focus)", tags: { sweetness: "low" }, icon: "🌿", image: "images/cold_drinks/nutty_roasty/balanced/standard/classic/chill/hojicha_iced_creamy.png" }
         ]
     },
     {
@@ -477,9 +477,9 @@ const QUESTIONS = [
         text: "Texture craving?",
         weight: 0.15,
         options: [
-            { text: "Foamy/cloudy/creamy", tags: { texture: "foamy" }, icon: "☁️" },
-            { text: "Light & refreshing (bubbly or tea-like)", tags: { texture: "refreshing" }, icon: "🫧" },
-            { text: "Standard latte", tags: { texture: "standard" }, icon: "🥛" }
+            { text: "Foamy/cloudy/creamy", tags: { texture: "foamy" }, icon: "☁️", image: "images/cold_drinks/earthy/sweet/foamy/fruity/indulgent/iced_banana_matcha.png" },
+            { text: "Light & refreshing (bubbly or tea-like)", tags: { texture: "refreshing" }, icon: "🫧", image: "images/cold_drinks/earthy/natural/foamy/floral/energizing/iced_foam_rose.png" },
+            { text: "Standard latte", tags: { texture: "standard" }, icon: "🥛", image: "images/cold_drinks/nutty_roasty/balanced/foamy/floral/chill/iced_kocha_latte.png" }
         ]
     },
     {
@@ -487,10 +487,10 @@ const QUESTIONS = [
         text: "Flavor twist?",
         weight: 0.10,
         options: [
-            { text: "Fruity (strawberry/mango)", tags: { flavor: "fruity" }, icon: "🍓" },
-            { text: "Floral/coconut", tags: { flavor: "floral" }, icon: "🌸" },
-            { text: "Chocolatey/roasty dessert (tiramisu or marshmallow)", tags: { flavor: "dessert" }, icon: "🍫" },
-            { text: "Pure classic", tags: { flavor: "classic" }, icon: "🍃" }
+            { text: "Fruity (strawberry/mango)", tags: { flavor: "fruity" }, icon: "🍓", image: "images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_mango_matcha.png" },
+            { text: "Floral/coconut", tags: { flavor: "floral" }, icon: "🌸", image: "images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_hojicha_latte_lavender_coldfoam.png" },
+            { text: "Chocolatey/roasty dessert", tags: { flavor: "dessert" }, icon: "🍫", image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_foam_lavender.png" },
+            { text: "Pure classic", tags: { flavor: "classic" }, icon: "🍃", image: "images/hot_drinks/coffee/natural/standard/classic/energizing/flat_white.png" }
         ]
     },
     {
@@ -498,9 +498,9 @@ const QUESTIONS = [
         text: "Current mood?",
         weight: 0.10,
         options: [
-            { text: "Indulgent treat", tags: { mood: "indulgent" }, icon: "🎉" },
-            { text: "Energizing", tags: { mood: "energizing" }, icon: "⚡" },
-            { text: "Chill & relaxed", tags: { mood: "relaxed" }, icon: "🧘" }
+            { text: "Indulgent treat", tags: { mood: "indulgent" }, icon: "🎉", image: "images/cold_drinks/surprise/sweet/foamy/dessert/indulgent/iced_hojicha_latte.png" },
+            { text: "Energizing", tags: { mood: "energizing" }, icon: "⚡", image: "images/hot_drinks/coffee/natural/standard/classic/energizing/cortado.png" },
+            { text: "Chill & relaxed", tags: { mood: "relaxed" }, icon: "🧘", image: "images/hot_drinks/surprise/natural/refreshing/classic/chill/kocha_hot_tea.png" }
         ]
     }
 ];
@@ -587,7 +587,14 @@ function renderQuestion() {
     q.options.forEach((opt, idx) => {
         const card = document.createElement('div');
         card.className = 'option-card';
-        card.innerHTML = `<span style="font-size: 4rem; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.15)); margin-bottom: 10px; transition: transform 0.3s ease;">${opt.icon}</span><span style="color: var(--text-main); line-height: 1.3;">${opt.text}</span>`;
+        card.innerHTML = `
+            <img src="${opt.image}" class="option-bg" alt="Option Image">
+            <div class="option-overlay"></div>
+            <div class="option-content">
+                <span class="option-icon">${opt.icon}</span>
+                <span class="option-text">${opt.text}</span>
+            </div>
+        `;
         
         if (userAnswers[q.id] && Object.values(opt.tags)[0] === userAnswers[q.id]) {
             card.classList.add('selected');
