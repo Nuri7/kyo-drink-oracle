@@ -445,7 +445,7 @@ const DRINKS_DB = [
 const QUESTIONS = [
     {
         id: "temp",
-        text: "1. Temperature preference today?",
+        text: "Temperature preference today?",
         weight: 0.20,
         options: [
             { text: "Hot & cozy", tags: { temp: "hot" }, icon: "🔥" },
@@ -455,7 +455,7 @@ const QUESTIONS = [
     },
     {
         id: "base",
-        text: "2. Main flavor base?",
+        text: "Main flavor base?",
         weight: 0.30,
         options: [
             { text: "Earthy umami Matcha", tags: { base: "matcha" }, icon: "🍵" },
@@ -466,7 +466,7 @@ const QUESTIONS = [
     },
     {
         id: "sweetness",
-        text: "3. Sweetness level?",
+        text: "Sweetness level?",
         weight: 0.15,
         options: [
             { text: "Sweet dessert vibes (fruity or indulgent)", tags: { sweetness: "high" }, icon: "🍰" },
@@ -476,7 +476,7 @@ const QUESTIONS = [
     },
     {
         id: "texture",
-        text: "4. Texture craving?",
+        text: "Texture craving?",
         weight: 0.15,
         options: [
             { text: "Foamy/cloudy/creamy", tags: { texture: "foamy" }, icon: "☁️" },
@@ -486,7 +486,7 @@ const QUESTIONS = [
     },
     {
         id: "flavor",
-        text: "5. Flavor twist?",
+        text: "Flavor twist?",
         weight: 0.10,
         options: [
             { text: "Fruity (strawberry/mango)", tags: { flavor: "fruity" }, icon: "🍓" },
@@ -497,7 +497,7 @@ const QUESTIONS = [
     },
     {
         id: "mood",
-        text: "6. Current mood?",
+        text: "Current mood?",
         weight: 0.10,
         options: [
             { text: "Indulgent treat", tags: { mood: "indulgent" }, icon: "🎉" },
