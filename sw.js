@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kyo-oracle-v24';
+const CACHE_NAME = 'kyo-oracle-v26';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -7,22 +7,22 @@ const ASSETS_TO_CACHE = [
   './manifest.json',
   './images/icons/icon-192.png',
   './images/icons/icon-512.png',
-  './images/cold drinks/cold_foam_matcha.png',
-  './images/cold drinks/earthy/natural/refreshing/classic/energizing/iced_matcha_soda.png',
-  './images/cold drinks/coconut_cloud_matcha.png',
-  './images/cold drinks/earthy/sweet/standard/fruity/indulgent/iced_strawberry_matcha.png',
-  './images/cold drinks/earthy/sweet/standard/fruity/indulgent/iced_mango_matcha.png',
-  './images/cold drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png',
-  './images/cold drinks/surprise/sweet/foamy/dessert/indulgent/iced_hojicha_latte.png',
-  './images/cold drinks/earthy/balanced/standard/classic/energizing/iced_matcha_latte.png',
-  './images/cold drinks/hojicha_latte.png',
-  './images/cold drinks/earthy/balanced/standard/classic/energizing/matcha_tea.png',
-  './images/cold drinks/earthy/natural/refreshing/classic/energizing/sencha_tea.png',
-  './images/cold drinks/sencha_tea.png',
-  './images/cold drinks/coffee/balanced/standard/classic/energizing/iced_latte.png',
-  './images/hot drinks/coffee/natural/standard/classic/energizing/flat_white.png',
-  './images/cold drinks/coffee/natural/refreshing/classic/energizing/iced_americano.png',
-  './images/hot drinks/coffee/natural/standard/classic/energizing/cortado.png'
+  './images/cold_drinks/cold_foam_matcha.png',
+  './images/cold_drinks/earthy/natural/refreshing/classic/energizing/iced_matcha_soda.png',
+  './images/cold_drinks/coconut_cloud_matcha.png',
+  './images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_strawberry_matcha.png',
+  './images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_mango_matcha.png',
+  './images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png',
+  './images/cold_drinks/surprise/sweet/foamy/dessert/indulgent/iced_hojicha_latte.png',
+  './images/cold_drinks/earthy/balanced/standard/classic/energizing/iced_matcha_latte.png',
+  './images/cold_drinks/hojicha_latte.png',
+  './images/cold_drinks/earthy/balanced/standard/classic/energizing/matcha_tea.png',
+  './images/cold_drinks/earthy/natural/refreshing/classic/energizing/sencha_tea.png',
+  './images/cold_drinks/sencha_tea.png',
+  './images/cold_drinks/coffee/balanced/standard/classic/energizing/iced_latte.png',
+  './images/hot_drinks/coffee/natural/standard/classic/energizing/flat_white.png',
+  './images/cold_drinks/coffee/natural/refreshing/classic/energizing/iced_americano.png',
+  './images/hot_drinks/coffee/natural/standard/classic/energizing/cortado.png'
 ];
 
 self.addEventListener('install', event => {

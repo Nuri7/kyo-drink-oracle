@@ -8,7 +8,7 @@ const DRINKS_DB = [
         name: "Strawberry Cold Foam Matcha",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/sweet/foamy/fruity/indulgent/iced_cold_foam_strawberry.png",
+        image: "images/cold_drinks/earthy/sweet/foamy/fruity/indulgent/iced_cold_foam_strawberry.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -24,7 +24,7 @@ const DRINKS_DB = [
         name: "Vanilla Cold Foam Matcha",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/sweet/foamy/dessert/indulgent/iced_cold_foam_vanilla.png",
+        image: "images/cold_drinks/earthy/sweet/foamy/dessert/indulgent/iced_cold_foam_vanilla.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -40,7 +40,7 @@ const DRINKS_DB = [
         name: "Jasmine Cold Foam Matcha",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/balanced/foamy/floral/chill/iced_foam_jasmine.png",
+        image: "images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_foam_jasmine.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -56,7 +56,7 @@ const DRINKS_DB = [
         name: "Lavender Cold Foam Matcha",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/balanced/foamy/floral/chill/iced_hojicha_latte_lavender_coldfoam.png",
+        image: "images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_hojicha_latte_lavender_coldfoam.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -72,7 +72,7 @@ const DRINKS_DB = [
         name: "Rose Cold Foam Matcha",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/natural/foamy/floral/energizing/iced_foam_rose.png",
+        image: "images/cold_drinks/earthy/natural/foamy/floral/energizing/iced_foam_rose.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -88,7 +88,7 @@ const DRINKS_DB = [
         name: "Matcha Soda",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/natural/refreshing/classic/energizing/iced_matcha_soda.png",
+        image: "images/cold_drinks/earthy/natural/refreshing/classic/energizing/iced_matcha_soda.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -104,7 +104,7 @@ const DRINKS_DB = [
         name: "Coconut Cloud Matcha",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/balanced/foamy/floral/chill/iced_coconut_cloud_matcha.png",
+        image: "images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_coconut_cloud_matcha.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -120,7 +120,7 @@ const DRINKS_DB = [
         name: "Mango Coconut Cloud",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/balanced/foamy/fruity/indulgent/Iced_hojicha_vanilla_coldfoam.png",
+        image: "images/cold_drinks/earthy/balanced/foamy/fruity/indulgent/Iced_hojicha_vanilla_coldfoam.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -136,7 +136,7 @@ const DRINKS_DB = [
         name: "Banana Coconut Cloud",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/sweet/foamy/fruity/indulgent/iced_banana_matcha.png",
+        image: "images/cold_drinks/earthy/sweet/foamy/fruity/indulgent/iced_banana_matcha.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -152,7 +152,7 @@ const DRINKS_DB = [
         name: "Orgeade Coconut Cloud",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/balanced/foamy/dessert/chill/iced_orgeade_matcha.png",
+        image: "images/cold_drinks/earthy/balanced/foamy/dessert/chill/iced_orgeade_matcha.png",
         tags: {
             temp: ["iced"],
             base: ["matcha", "surprise"],
@@ -168,7 +168,7 @@ const DRINKS_DB = [
         name: "Strawberry Matcha Latte",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/sweet/standard/fruity/indulgent/iced_strawberry_matcha.png",
+        image: "images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_strawberry_matcha.png",
         tags: {
             temp: ["iced", "any"],
             base: ["matcha", "surprise"],
@@ -184,7 +184,7 @@ const DRINKS_DB = [
         name: "Mango Matcha Latte",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/earthy/sweet/standard/fruity/indulgent/iced_mango_matcha.png",
+        image: "images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_mango_matcha.png",
         tags: {
             temp: ["iced", "any"],
             base: ["matcha", "surprise"],
@@ -200,7 +200,7 @@ const DRINKS_DB = [
         name: "Tiramisu Hojicha Latte",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png",
+        image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["hojicha", "surprise"],
@@ -216,7 +216,7 @@ const DRINKS_DB = [
         name: "Sticky Marshmallow Choco",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/surprise/sweet/foamy/dessert/indulgent/iced_hojicha_latte.png",
+        image: "images/cold_drinks/surprise/sweet/foamy/dessert/indulgent/iced_hojicha_latte.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["surprise", "hojicha"], 
@@ -234,7 +234,7 @@ const DRINKS_DB = [
         name: "Matcha Latte",
         price: "€6.50",
         type: "daily",
-        image: "images/cold drinks/earthy/balanced/standard/classic/energizing/iced_matcha_latte.png",
+        image: "images/cold_drinks/earthy/balanced/standard/classic/energizing/iced_matcha_latte.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["matcha"],
@@ -250,7 +250,7 @@ const DRINKS_DB = [
         name: "Hojicha Vanilla Cold Foam",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_foam_lavender.png",
+        image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_foam_lavender.png",
         tags: {
             temp: ["iced"],
             base: ["hojicha", "surprise"],
@@ -266,7 +266,7 @@ const DRINKS_DB = [
         name: "Hojicha Lavender Cold Foam",
         price: "€7.20",
         type: "special",
-        image: "images/cold drinks/nutty_roasty/balanced/foamy/floral/chill/iced_kocha_latte.png",
+        image: "images/cold_drinks/nutty_roasty/balanced/foamy/floral/chill/iced_kocha_latte.png",
         tags: {
             temp: ["iced"],
             base: ["hojicha", "surprise"],
@@ -282,7 +282,7 @@ const DRINKS_DB = [
         name: "Iced Creamy Hojicha",
         price: "€6.50",
         type: "special",
-        image: "images/cold drinks/nutty_roasty/balanced/standard/classic/chill/hojicha_iced_creamy.png",
+        image: "images/cold_drinks/nutty_roasty/balanced/standard/classic/chill/hojicha_iced_creamy.png",
         tags: {
             temp: ["iced"],
             base: ["hojicha", "surprise"],
@@ -298,7 +298,7 @@ const DRINKS_DB = [
         name: "Kocha Latte",
         price: "€5.70",
         type: "daily",
-        image: "images/cold drinks/earthy/balanced/standard/classic/energizing/matcha_tea.png",
+        image: "images/cold_drinks/earthy/balanced/standard/classic/energizing/matcha_tea.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["matcha", "hojicha", "surprise"], // Black tea
@@ -314,7 +314,7 @@ const DRINKS_DB = [
         name: "Matcha Tea",
         price: "€6.20",
         type: "daily",
-        image: "images/cold drinks/earthy/natural/refreshing/classic/energizing/sencha_tea.png",
+        image: "images/cold_drinks/earthy/natural/refreshing/classic/energizing/sencha_tea.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["matcha"],
@@ -330,7 +330,7 @@ const DRINKS_DB = [
         name: "Hot Hojicha Tea",
         price: "€4.20",
         type: "daily",
-        image: "images/hot drinks/nutty_roasty/natural/refreshing/dessert/chill/hojicha_hot_tea.png",
+        image: "images/hot_drinks/nutty_roasty/natural/refreshing/dessert/chill/hojicha_hot_tea.png",
         tags: {
             temp: ["hot", "any"],
             base: ["hojicha"],
@@ -346,7 +346,7 @@ const DRINKS_DB = [
         name: "Hot Kocha Tea",
         price: "€4.20",
         type: "daily",
-        image: "images/hot drinks/surprise/natural/refreshing/classic/chill/kocha_hot_tea.png",
+        image: "images/hot_drinks/surprise/natural/refreshing/classic/chill/kocha_hot_tea.png",
         tags: {
             temp: ["hot", "any"],
             base: ["surprise"],
@@ -364,7 +364,7 @@ const DRINKS_DB = [
         name: "Iced Latte",
         price: "€4.50",
         type: "coffee",
-        image: "images/cold drinks/coffee/balanced/standard/classic/energizing/iced_latte.png",
+        image: "images/cold_drinks/coffee/balanced/standard/classic/energizing/iced_latte.png",
         tags: {
             temp: ["iced", "any"],
             base: ["coffee"],
@@ -380,7 +380,7 @@ const DRINKS_DB = [
         name: "Flat White",
         price: "€4.20",
         type: "coffee",
-        image: "images/hot drinks/coffee/natural/standard/classic/energizing/flat_white.png",
+        image: "images/hot_drinks/coffee/natural/standard/classic/energizing/flat_white.png",
         tags: {
             temp: ["hot", "any"],
             base: ["coffee"],
@@ -396,7 +396,7 @@ const DRINKS_DB = [
         name: "Iced Americano",
         price: "€3.70",
         type: "coffee",
-        image: "images/cold drinks/coffee/natural/refreshing/classic/energizing/iced_americano.png",
+        image: "images/cold_drinks/coffee/natural/refreshing/classic/energizing/iced_americano.png",
         tags: {
             temp: ["iced", "any"],
             base: ["coffee"],
@@ -412,7 +412,7 @@ const DRINKS_DB = [
         name: "Americano Matcha Foam",
         price: "€5.50",
         type: "special",
-        image: "images/cold drinks/coffee/balanced/foamy/classic/energizing/iced_americano_matcha_foam.png",
+        image: "images/cold_drinks/coffee/balanced/foamy/classic/energizing/iced_americano_matcha_foam.png",
         tags: {
             temp: ["iced"],
             base: ["coffee", "matcha"],
@@ -428,7 +428,7 @@ const DRINKS_DB = [
         name: "Cortado",
         price: "€3.70",
         type: "coffee",
-        image: "images/hot drinks/coffee/natural/standard/classic/energizing/cortado.png",
+        image: "images/hot_drinks/coffee/natural/standard/classic/energizing/cortado.png",
         tags: {
             temp: ["hot", "any"],
             base: ["coffee"],
@@ -589,7 +589,7 @@ function renderQuestion() {
     q.options.forEach((opt, idx) => {
         const card = document.createElement('div');
         card.className = 'option-card';
-        card.innerHTML = `<span style="font-size: 2.5rem; margin-right: 20px; vertical-align: middle;">${opt.icon}</span> <span style="vertical-align: middle;">${opt.text}</span>`;
+        card.innerHTML = `<span style="flex: 1; text-align: left;">${opt.text}</span><span style="font-size: 2.8rem; margin-left: 15px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); transform: translateY(-3px);">${opt.icon}</span>`;
         
         if (userAnswers[q.id] && Object.values(opt.tags)[0] === userAnswers[q.id]) {
             card.classList.add('selected');
