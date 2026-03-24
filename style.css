@@ -241,7 +241,35 @@ h1, h2, h3 { font-family: var(--font-heading); }
 .emoji-logo { font-size: 5rem; line-height: 1; }
 .title { font-size: 2.5rem; font-weight: 900; color: var(--matcha-dark); }
 .subtitle { font-size: 1.1rem; color: var(--text-light); margin-top: -1rem; }
-.info-card { gap: 0.5rem; display: flex; flex-direction: column; width: 100%; }
+
+.drink-marquee-container {
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+    position: relative;
+    padding: 1rem 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+.drink-marquee {
+    display: flex;
+    width: max-content;
+    animation: scrollMarquee 15s linear infinite;
+    gap: 1rem;
+}
+.drink-marquee img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: var(--shadow-soft);
+    border: 3px solid rgba(255,255,255,0.7);
+}
+@keyframes scrollMarquee { 
+    0% { transform: translateX(0); } 
+    100% { transform: translateX(calc(-50% - 0.5rem)); } 
+}
+
 .footer { text-align: center; margin-top: auto; padding-top: 2rem; color: var(--text-light); font-size: 0.85rem; letter-spacing: 0.5px; opacity: 0.7; }
 
 /* ------------------- Quiz Screen ------------------- */
@@ -360,7 +388,8 @@ h1, h2, h3 { font-family: var(--font-heading); }
     .emoji-logo { font-size: 3.5rem; }
     .title { font-size: 2rem; }
     .subtitle { margin-top: -0.5rem; font-size: 1rem; }
-    .info-card { padding: 1rem 1.5rem; align-items: center; text-align: center; }
+    .drink-marquee-container { padding: 0.5rem 0; }
+    .drink-marquee img { width: 55px; height: 55px; }
     .quiz-header { margin-bottom: 1.5rem; }
     .question-text { font-size: 1.5rem; margin-bottom: 1.25rem; }
     .options-grid { margin-bottom: 1.5rem; gap: 0.75rem; }
