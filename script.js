@@ -282,7 +282,7 @@ const DRINKS_DB = [
         name: "Iced Creamy Hojicha",
         price: "€6.50",
         type: "special",
-        image: "images/cold_drinks/nutty_roasty/balanced/standard/classic/chill/hojicha_iced_creamy.png",
+        image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png",
         tags: {
             temp: ["iced"],
             base: ["hojicha", "surprise"],
