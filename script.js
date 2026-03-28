@@ -702,9 +702,6 @@ function renderQuestion() {
             setTimeout(() => {
                 currentQuestionIndex++;
                 if (currentQuestionIndex < QUESTIONS.length) {
-                    dom.qText.parentElement.classList.remove('slide-up');
-                    void dom.qText.parentElement.offsetWidth; 
-                    dom.qText.parentElement.classList.add('slide-up');
                     renderQuestion();
                 } else {
                     generateResult();
