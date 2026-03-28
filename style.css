@@ -479,7 +479,7 @@ h1, h2, h3 { font-family: var(--font-heading); }
     .question-text { font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center; }
     .options-grid { margin-bottom: 1.5rem; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
     
-    .winner-card { flex-direction: row; text-align: left; padding: 2rem; gap: 4rem; justify-content: center; align-items: center; }
+    .winner-card { flex-direction: row; text-align: left; padding: 2.5rem; gap: 5.5rem; justify-content: center; align-items: center; }
     .winner-image-container { max-width: 45%; height: 50vh; } /* Full dominant split */
     .winner-main { flex: 1; align-items: flex-start; text-align: left; justify-content: center; display: flex; flex-direction: column; gap: 1.5rem; padding-right: 1.5rem; }
     .why-divider { display: none; }
