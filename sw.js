@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kyo-oracle-v50';
+const CACHE_NAME = 'kyo-oracle-v51';
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
@@ -38,7 +38,8 @@ const ASSETS_TO_CACHE = [
   "./images/hot_drinks/nutty_roasty/natural/refreshing/dessert/chill/hojicha_hot_tea.png",
   "./images/hot_drinks/surprise/natural/refreshing/classic/chill/kocha_hot_tea.png",
   "./images/icons/icon-192.png",
-  "./images/icons/icon-512.png"
+  "./images/icons/icon-512.png",
+  "./images/qr_code.png"
 ];
 
 self.addEventListener('install', event => {
