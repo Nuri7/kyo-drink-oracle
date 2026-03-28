@@ -365,8 +365,8 @@ h1, h2, h3 { font-family: var(--font-heading); }
 .result-title { font-size: 1.5rem; color: var(--text-light); font-weight: 600; margin-top: 0.5rem; }
 .fun-msg { font-weight: 700; color: var(--matcha-green); font-size: 1.2rem; }
 
-.winner-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
-.winner-main { text-align: center; }
+.winner-card { position: relative; display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem; }
+.winner-main { text-align: center; margin-top: 2rem; }
 
 .winner-image-container {
     width: 100%;
@@ -381,6 +381,8 @@ h1, h2, h3 { font-family: var(--font-heading); }
 
 .winner-image-container img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
 }
 
@@ -479,13 +481,13 @@ h1, h2, h3 { font-family: var(--font-heading); }
     .question-text { font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center; }
     .options-grid { margin-bottom: 1.5rem; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
     
-    .winner-card { flex-direction: row; text-align: left; padding: 2.5rem; gap: 5.5rem; justify-content: center; align-items: center; }
-    .winner-image-container { max-width: 45%; height: 50vh; } /* Full dominant split */
-    .winner-main { flex: 1; align-items: flex-start; text-align: left; justify-content: center; display: flex; flex-direction: column; gap: 1.5rem; padding-right: 1.5rem; }
+    .winner-card { flex-direction: row; text-align: left; padding: 2.5rem; justify-content: space-between; align-items: center; }
+    .winner-image-container { width: 45%; max-width: 45%; height: 50vh; margin-right: 4rem; } /* Explicit margin fixes legacy Safari lacking flex gap support */
+    .winner-main { flex: 1; align-items: flex-start; text-align: left; justify-content: center; display: flex; flex-direction: column; padding-right: 1.5rem; margin-top: 0; }
     .why-divider { display: none; }
     .result-emoji { font-size: 2.5rem; margin-bottom: -1rem; }
-    .drink-name { font-size: 2.8rem; line-height: 1.05; letter-spacing: -1px; margin-bottom: 0; }
-    .why-fits { padding: 1.8rem; background: rgba(255,255,255,0.5); border-left: 4px solid var(--matcha-green); box-shadow: none; font-style: italic; }
+    .drink-name { font-size: 2.8rem; line-height: 1.05; letter-spacing: -1px; margin-bottom: 2rem; }
+    .why-fits { padding: 1.8rem; background: rgba(255,255,255,0.5); border-left: 4px solid var(--matcha-green); box-shadow: none; font-style: italic; margin-top: auto; }
     .why-fits h3 { font-size: 1.2rem; margin-bottom: 0.8rem; font-style: normal; font-weight: 800; }
     .why-fits p { font-size: 1.15rem; line-height: 1.6; }
 }
