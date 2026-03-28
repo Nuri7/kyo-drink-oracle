@@ -315,7 +315,6 @@ h1, h2, h3 { font-family: var(--font-heading); }
 .option-card {
     position: relative;
     overflow: hidden;
-    transform: translateZ(0); /* Force webkit to strictly clip */
     background: var(--glass-bg);
     border: 3px solid rgba(255,255,255,0.7);
     border-radius: 20px;
@@ -327,6 +326,10 @@ h1, h2, h3 { font-family: var(--font-heading); }
     flex-direction: column;
     aspect-ratio: 3/4;
     min-height: 250px;
+}
+
+.option-card * {
+    pointer-events: none;
 }
 
 .option-bg {
