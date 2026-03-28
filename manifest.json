@@ -2,7 +2,7 @@
   "name": "KYŌ Drink Oracle",
   "short_name": "KYŌ Oracle",
   "description": "Find your perfect match from the KYŌ-KLUB menu.",
-  "start_url": "./index.html",
+  "start_url": "./index.html?v=49",
   "display": "standalone",
   "background_color": "#FDFBF7",
   "theme_color": "#8A9A5B",
