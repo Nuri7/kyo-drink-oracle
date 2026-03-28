@@ -439,6 +439,102 @@ const DRINKS_DB = [
         },
         desc: "Equal parts espresso & steamed milk.",
         customs: []
+    },
+    {
+        name: "Cappuccino",
+        price: "€4.50",
+        type: "coffee",
+        image: "images/hot_drinks/coffee/balanced/foamy/classic/energizing/hot_cappuccino.png",
+        tags: {
+            temp: ["hot", "any"],
+            base: ["coffee"],
+            sweetness: ["low", "medium"],
+            texture: ["foamy"],
+            flavor: ["classic"],
+            mood: ["energizing", "relaxed"]
+        },
+        desc: "Rich espresso topped with a deep layer of velvety foam.",
+        customs: ["Classic ratio"]
+    },
+    {
+        name: "Espresso",
+        price: "€3.00",
+        type: "coffee",
+        image: "images/hot_drinks/coffee/natural/standard/classic/energizing/hot_espresso.png",
+        tags: {
+            temp: ["hot"],
+            base: ["coffee"],
+            sweetness: ["low"],
+            texture: ["standard"],
+            flavor: ["classic"],
+            mood: ["energizing"]
+        },
+        desc: "A pure, intense shot of perfectly extracted coffee.",
+        customs: ["Double shot"]
+    },
+    {
+        name: "Hot Latte",
+        price: "€4.50",
+        type: "coffee",
+        image: "images/hot_drinks/coffee/balanced/standard/classic/relaxed/hot_latte.png",
+        tags: {
+            temp: ["hot", "any"],
+            base: ["coffee"],
+            sweetness: ["low", "medium"],
+            texture: ["standard", "foamy"],
+            flavor: ["classic"],
+            mood: ["relaxed", "energizing"]
+        },
+        desc: "Smooth espresso blended carefully with steamed milk.",
+        customs: ["Oat milk optional"]
+    },
+    {
+        name: "Hot Americano",
+        price: "€3.80",
+        type: "coffee",
+        image: "images/hot_drinks/coffee/natural/refreshing/classic/energizing/hot_americano.png",
+        tags: {
+            temp: ["hot", "any"],
+            base: ["coffee"],
+            sweetness: ["low"],
+            texture: ["refreshing"],
+            flavor: ["classic"],
+            mood: ["energizing"]
+        },
+        desc: "Bold espresso drawn out with hot water for a crisp finish.",
+        customs: ["Room for milk optional"]
+    },
+    {
+        name: "Hot Chocolate",
+        price: "€5.00",
+        type: "special",
+        image: "images/hot_drinks/coffee/sweet/standard/dessert/indulgent/hot_chocolate.png",
+        tags: {
+            temp: ["hot", "any"],
+            base: ["coffee", "matcha", "hojicha"],
+            sweetness: ["high", "medium"],
+            texture: ["standard", "foamy"],
+            flavor: ["dessert"],
+            mood: ["indulgent", "relaxed"]
+        },
+        desc: "Decadently rich, melted artisan chocolate with steamed milk.",
+        customs: ["Perfect dessert drink"]
+    },
+    {
+        name: "Hot Hojicha Latte",
+        price: "€5.20",
+        type: "tea",
+        image: "images/hot_drinks/nutty_roasty/balanced/standard/classic/relaxed/hot_hojicha_latte.png",
+        tags: {
+            temp: ["hot", "any"],
+            base: ["hojicha"],
+            sweetness: ["low", "medium"],
+            texture: ["standard", "foamy"],
+            flavor: ["classic", "dessert"],
+            mood: ["relaxed"]
+        },
+        desc: "Warm roasted green tea gracefully folded into steamed milk.",
+        customs: ["Earthy and comforting"]
     }
 ];
 
