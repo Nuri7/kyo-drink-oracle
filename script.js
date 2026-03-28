@@ -650,11 +650,6 @@ function init() {
     });
 
     dom.backBtn.addEventListener('click', () => {
-        // Simple transition reset
-        dom.qText.parentElement.classList.remove('slide-up');
-        void dom.qText.parentElement.offsetWidth;
-        dom.qText.parentElement.classList.add('slide-up');
-        
         if (currentQuestionIndex > 0) {
             currentQuestionIndex--;
             renderQuestion();
