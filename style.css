@@ -284,12 +284,19 @@ h1, h2, h3 { font-family: var(--font-heading); }
 .progress-bar { width: 100%; height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
 .progress-fill { height: 100%; background: var(--matcha-green); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
 
-.question-wrapper { flex: 1; display: flex; flex-direction: column; }
+.question-wrapper { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    width: 100%; 
+    min-width: 0; 
+}
 .question-text { font-size: 2.2rem; font-weight: 800; text-align: center; margin-bottom: 2.5rem; color: var(--text-main); line-height: 1.3; }
 
 .options-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem; 
     margin-bottom: 3rem; 
     width: 100%;
@@ -306,6 +313,9 @@ h1, h2, h3 { font-family: var(--font-heading); }
     display: flex;
     flex-direction: column;
     height: 320px;
+    flex: 1 1 200px;
+    max-width: 320px;
+    min-width: 200px;
 }
 
 .option-card * {
