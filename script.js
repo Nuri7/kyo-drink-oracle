@@ -565,7 +565,7 @@ const QUESTIONS = [
         options: [
             { text: "Sweet dessert vibes (fruity or indulgent)", tags: { sweetness: "high" }, icon: "🍰", image: "images/cold_drinks/earthy/sweet/foamy/dessert/indulgent/iced_cold_foam_vanilla.png" },
             { text: "Lightly balanced", tags: { sweetness: "medium" }, icon: "🍯", image: "images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_coconut_cloud_matcha.png" },
-            { text: "Natural / barely sweet (umami focus)", tags: { sweetness: "low" }, icon: "🌿", image: "images/cold_drinks/nutty_roasty/balanced/standard/classic/chill/hojicha_iced_creamy.png" }
+            { text: "Natural / barely sweet (umami focus)", tags: { sweetness: "low" }, icon: "🌿", image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png" }
         ]
     },
     {
