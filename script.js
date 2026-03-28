@@ -349,7 +349,7 @@ const DRINKS_DB = [
         image: "images/hot_drinks/surprise/natural/refreshing/classic/chill/kocha_hot_tea.png",
         tags: {
             temp: ["hot", "any"],
-            base: ["surprise"],
+            base: ["hojicha", "matcha", "coffee"],
             sweetness: ["low"],
             texture: ["refreshing"],
             flavor: ["classic"],
@@ -736,7 +736,7 @@ function calculateScores() {
     let scores = DRINKS_DB.map(drink => {
         let score = 0;
         QUESTIONS.forEach(q => {
-            const userAnswerVal = userAnswers[q.id]; // e.g., 'hot'
+            const userAnswerVal = userAnswers[q.id];
             if (!userAnswerVal) return;
 
             const drinkTagsForCategory = drink.tags[q.id];
@@ -746,22 +746,23 @@ function calculateScores() {
             if (drinkTagsForCategory && (drinkTagsForCategory.includes(userAnswerVal) || (q.id === 'temp' && userAnswerVal === 'any'))) {
                 score += q.weight;
             }
-            // For special surprise, reward drinks of type special heavily
-            if (q.id === 'base' && userAnswerVal === 'surprise' && drink.type === 'special') {
-                score += q.weight * 1.5; // bonus multiplier
-            }
         });
-        
-        // Slightly prioritize specials just for fun if tied
-        if (drink.type === 'special') score += 0.05;
         
         return { drink, score };
     });
 
+    // Sort by strict mathematical tag scoring
     scores.sort((a, b) => b.score - a.score);
     
-    const topDrink = scores[0].drink;
-    const backupDrinks = [scores[1].drink, scores[2].drink];
+    // --- Oracle Random Tie-Breaker ---
+    // If multiple drinks perfectly match your vibe input identically, the Oracle lets destiny decide!
+    const topScore = scores[0].score;
+    const tiedTopDrinks = scores.filter(s => s.score === topScore);
+    const topDrink = tiedTopDrinks[Math.floor(Math.random() * tiedTopDrinks.length)].drink;
+    
+    // Ensure the backups are populated by the next best variants that aren't the winner
+    const allRankedDrinks = scores.map(s => s.drink).filter(d => d.name !== topDrink.name);
+    const backupDrinks = [allRankedDrinks[0], allRankedDrinks[1]];
 
     renderResultUI(topDrink, backupDrinks);
 }
