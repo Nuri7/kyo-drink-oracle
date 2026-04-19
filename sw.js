@@ -64,25 +64,14 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then(response => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request).then(
-          function(response) {
-            // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-            // Add dynamic caching if desired:
-            // var responseToCache = response.clone();
-            // caches.open(CACHE_NAME).then(function(cache) {
-            //   cache.put(event.request, responseToCache);
-            // });
-            return response;
-          }
-        );
+        // We received a valid network response, return it (Live Data)
+        return response;
+      })
+      .catch(() => {
+        // Network failed (user is offline), fallback to the cache
+        return caches.match(event.request);
       })
   );
 });

@@ -758,12 +758,18 @@ function calculateScores() {
 
     // --- Analytics Tracking ---
     if (window.posthog) {
-        posthog.capture('drink_recommended', {
-            drink_name: topDrink.name,
+        // Creates a uniquely named event like "Recommended: Matcha Latte"
+        // This means every drink will appear as its own separate event in the dropdown!
+        posthog.capture(`Recommended: ${topDrink.name}`, {
             drink_price: topDrink.price,
             user_mood: userAnswers.mood,
             user_flavor: userAnswers.flavor,
             user_sweetness: userAnswers.sweetness
+        });
+        
+        // Also fire a general completion event specifically designed for pie charts
+        posthog.capture('Quiz Completed', {
+            drink_name: topDrink.name
         });
     }
 
