@@ -756,6 +756,17 @@ function calculateScores() {
     const allRankedDrinks = scores.map(s => s.drink).filter(d => d.name !== topDrink.name);
     const backupDrinks = [allRankedDrinks[0], allRankedDrinks[1]];
 
+    // --- Analytics Tracking ---
+    if (window.posthog) {
+        posthog.capture('drink_recommended', {
+            drink_name: topDrink.name,
+            drink_price: topDrink.price,
+            user_mood: userAnswers.mood,
+            user_flavor: userAnswers.flavor,
+            user_sweetness: userAnswers.sweetness
+        });
+    }
+
     renderResultUI(topDrink, backupDrinks);
 }
 
