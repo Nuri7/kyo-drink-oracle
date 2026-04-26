@@ -133,35 +133,35 @@ const DRINKS_DB = [
         customs: ["Contains real mango purée"]
     },
     {
-        name: "Banana Coconut Cloud",
+        name: "Banana Matcha Latte",
         price: "€7.20",
         type: "special",
         image: "images/cold_drinks/earthy/sweet/foamy/fruity/indulgent/iced_banana_matcha.png",
         tags: {
-            temp: ["iced"],
+            temp: ["iced", "any"],
             base: ["matcha", "surprise"],
             sweetness: ["high"],
-            texture: ["foamy"],
+            texture: ["standard"],
             flavor: ["fruity"],
             mood: ["indulgent"]
         },
-        desc: "Sweet, rich, and decadently fruity.",
-        customs: ["A luscious banana cloud"]
+        desc: "Sweet banana swirled into earthy matcha perfection.",
+        customs: ["Oat milk base included"]
     },
     {
-        name: "Orgeade Coconut Cloud",
+        name: "Orgeade Matcha Latte",
         price: "€7.20",
         type: "special",
         image: "images/cold_drinks/earthy/balanced/foamy/dessert/chill/iced_orgeade_matcha.png",
         tags: {
-            temp: ["iced"],
+            temp: ["iced", "any"],
             base: ["matcha", "surprise"],
             sweetness: ["medium"],
-            texture: ["foamy"],
+            texture: ["standard"],
             flavor: ["dessert"],
             mood: ["relaxed", "indulgent"]
         },
-        desc: "Almond-infused, beautifully balanced umami magic.",
+        desc: "Almond-infused orgeade meets earthy umami matcha.",
         customs: ["Garnished with crushed almonds"]
     },
     {
