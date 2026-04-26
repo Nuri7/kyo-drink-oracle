@@ -56,10 +56,10 @@
 
                 <!-- API Key Setup -->
                 <div class="api-setup">
-                    <h3>🔑 OpenAI API Key</h3>
+                    <h3>🔑 Replicate API Token</h3>
                     <div class="api-key-row">
-                        <input type="password" id="api-key-input" class="api-key-input" placeholder="sk-...">
-                        <button id="save-api-key" class="action-btn primary">Save Key</button>
+                        <input type="password" id="api-key-input" class="api-key-input" placeholder="r8_...">
+                        <button id="save-api-key" class="action-btn primary">Save Token</button>
                         <span id="api-key-status" class="api-key-status disconnected">Not set</span>
                     </div>
                     <details class="github-setup">
@@ -137,15 +137,7 @@
                     </div>
                 </div>
 
-                <!-- Edit Existing -->
-                <div class="studio-section">
-                    <h3>✏️ Edit Image with AI</h3>
-                    <p style="font-size:0.88rem;color:var(--text-light);margin-bottom:0.5rem;">
-                        Modify the current or generated image by describing what to change.
-                    </p>
-                    <textarea id="edit-instruction" class="edit-instruction" placeholder="e.g. Make the foam layer thicker, add a light pink gradient, more ice visible..."></textarea>
-                    <button id="edit-btn" class="generate-btn" style="margin-top:0.8rem;background:linear-gradient(135deg, #8C6A5D 0%, #5D4037 100%);box-shadow:0 4px 18px rgba(140,106,93,0.3);">✏️ Apply Edit</button>
-                </div>
+
 
                 <!-- Generation Log -->
                 <div class="studio-section">
