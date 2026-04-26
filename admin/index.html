@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KYŌ KLUB - Analytics Dashboard</title>
+    <title>KYŌ KLUB — Admin Dashboard</title>
+    <meta name="description" content="KYŌ KLUB admin panel — analytics and AI image management.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="image-studio.css">
 </head>
 <body>
     <div class="bg-shape bg-shape-1"></div>
@@ -16,8 +18,8 @@
 
     <div class="admin-container">
         <div class="admin-header">
-            <h1 class="title">Oracle Analytics</h1>
-            <a href="../index.html" class="btn btn-outline" style="text-decoration:none;">Exit to Oracle</a>
+            <h1 class="title">KYŌ Admin</h1>
+            <a href="../index.html" class="btn btn-outline" style="text-decoration:none;">← Exit to Oracle</a>
         </div>
 
         <!-- Lock Screen -->
@@ -29,21 +31,198 @@
             <p id="error-msg" style="color:#c0392b;margin-top:1rem;display:none;font-weight:bold;">Incorrect PIN</p>
         </div>
 
-        <!-- Dashboard Setup / Embed -->
+        <!-- Dashboard (hidden until PIN unlock) -->
         <div id="dashboard-screen" class="hidden">
-            <!-- This is where the user will paste their Iframe -->
-            <div class="dashboard-frame-container" id="iframe-wrapper">
-                
-                <iframe width="100%" height="400" frameborder="0" allowfullscreen src="https://eu.posthog.com/embedded/RJWEEC0eX8RwKK6y2s3OPOWknkrWFw" key="1" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation allow-modals"></iframe>
-                
+
+            <!-- Tab Navigation -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="tab-analytics">📊 Analytics</button>
+                <button class="admin-tab" data-tab="tab-studio">🎨 Image Studio</button>
+                <button class="admin-tab" data-tab="tab-references">📷 References</button>
+                <button class="admin-tab" data-tab="tab-history">🕑 History</button>
             </div>
-        </div>
-    </div>
+
+            <!-- ==================== ANALYTICS TAB ==================== -->
+            <div id="tab-analytics" class="tab-content active">
+                <div class="dashboard-frame-container" id="iframe-wrapper">
+                    <iframe width="100%" height="400" frameborder="0" allowfullscreen
+                        src="https://eu.posthog.com/embedded/RJWEEC0eX8RwKK6y2s3OPOWknkrWFw" key="1"
+                        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation allow-modals"></iframe>
+                </div>
+            </div>
+
+            <!-- ==================== IMAGE STUDIO TAB ==================== -->
+            <div id="tab-studio" class="tab-content">
+
+                <!-- API Key Setup -->
+                <div class="api-setup">
+                    <h3>🔑 OpenAI API Key</h3>
+                    <div class="api-key-row">
+                        <input type="password" id="api-key-input" class="api-key-input" placeholder="sk-...">
+                        <button id="save-api-key" class="action-btn primary">Save Key</button>
+                        <span id="api-key-status" class="api-key-status disconnected">Not set</span>
+                    </div>
+                    <details class="github-setup">
+                        <summary>🔗 GitHub Integration (optional)</summary>
+                        <div class="github-setup-content">
+                            <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:0.8rem;">
+                                Add a GitHub Personal Access Token to push generated images directly to your repo.
+                            </p>
+                            <div class="api-key-row">
+                                <input type="password" id="github-token-input" class="api-key-input" placeholder="ghp_...">
+                                <button id="save-github-token" class="action-btn primary">Save Token</button>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Drink Selector + Prompt -->
+                <div class="studio-section">
+                    <h3>🍵 Generate New Image</h3>
+
+                    <label style="font-weight:600;font-size:0.9rem;display:block;margin-bottom:0.5rem;">Select Drink</label>
+                    <select id="drink-select" class="drink-selector"></select>
+
+                    <label style="font-weight:600;font-size:0.9rem;display:block;margin-top:1.2rem;margin-bottom:0.3rem;">Style Preset</label>
+                    <div class="preset-row">
+                        <button class="preset-btn active" data-preset="product">📸 Product</button>
+                        <button class="preset-btn" data-preset="artistic">🎨 Artistic</button>
+                        <button class="preset-btn" data-preset="minimal">🍃 Minimal</button>
+                        <button class="preset-btn" data-preset="moody">🌙 Moody</button>
+                    </div>
+
+                    <label style="font-weight:600;font-size:0.9rem;display:block;margin-top:0.5rem;">Prompt</label>
+                    <textarea id="prompt-input" class="prompt-area" placeholder="Select a drink to auto-generate a prompt, or write your own..."></textarea>
+                    <p class="prompt-hint">Auto-generated from drink data + preset + references. Edit freely.</p>
+
+                    <div class="ref-toggles">
+                        <label class="ref-toggle">
+                            <input type="checkbox" id="use-bg-ref" checked> Use background reference
+                        </label>
+                        <label class="ref-toggle">
+                            <input type="checkbox" id="use-cup-ref" checked> Use cup/glass reference
+                        </label>
+                    </div>
+
+                    <button id="generate-btn" class="generate-btn">🎨 Generate Image</button>
+                </div>
+
+                <!-- Side-by-Side Preview -->
+                <div class="studio-section">
+                    <h3>👀 Preview</h3>
+                    <div class="preview-grid">
+                        <div class="preview-panel">
+                            <div class="preview-label">Current Image</div>
+                            <div class="preview-img-container" id="current-preview">
+                                <div class="preview-placeholder">
+                                    <span class="placeholder-icon">🍵</span>
+                                    Select a drink to preview
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-panel generated">
+                            <div class="preview-label">✨ AI Generated</div>
+                            <div class="preview-img-container" id="generated-preview">
+                                <div class="preview-placeholder">
+                                    <span class="placeholder-icon">🤖</span>
+                                    Generate an image to preview
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <button id="download-btn" class="action-btn primary post-gen-action" disabled>💾 Download Image</button>
+                        <button id="push-github-btn" class="action-btn post-gen-action" disabled>🚀 Push to GitHub</button>
+                    </div>
+                </div>
+
+                <!-- Edit Existing -->
+                <div class="studio-section">
+                    <h3>✏️ Edit Image with AI</h3>
+                    <p style="font-size:0.88rem;color:var(--text-light);margin-bottom:0.5rem;">
+                        Modify the current or generated image by describing what to change.
+                    </p>
+                    <textarea id="edit-instruction" class="edit-instruction" placeholder="e.g. Make the foam layer thicker, add a light pink gradient, more ice visible..."></textarea>
+                    <button id="edit-btn" class="generate-btn" style="margin-top:0.8rem;background:linear-gradient(135deg, #8C6A5D 0%, #5D4037 100%);box-shadow:0 4px 18px rgba(140,106,93,0.3);">✏️ Apply Edit</button>
+                </div>
+
+                <!-- Generation Log -->
+                <div class="studio-section">
+                    <h3>📋 Generation Log</h3>
+                    <div class="gen-log" id="gen-log">
+                        <div class="log-entry info">[Ready] Image Studio initialized</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== REFERENCES TAB ==================== -->
+            <div id="tab-references" class="tab-content">
+                <div class="studio-section">
+                    <h3>📷 Reference Images</h3>
+                    <p style="font-size:0.9rem;color:var(--text-light);margin-bottom:1.5rem;">
+                        Upload reference images to maintain visual consistency across all generated drink images.
+                        These references are incorporated into AI prompts automatically.
+                    </p>
+
+                    <div class="ref-grid">
+                        <!-- Background Reference -->
+                        <div class="ref-card">
+                            <h4>🏞️ Background Reference</h4>
+                            <input type="file" id="ref-background-file" accept="image/*" hidden>
+                            <div class="ref-img-preview" id="ref-background-preview">
+                                <div class="upload-hint">
+                                    <span class="hint-icon">📷</span>
+                                    Click to upload
+                                </div>
+                            </div>
+                            <label style="font-weight:600;font-size:0.82rem;display:block;margin-bottom:0.3rem;">Description (used in prompts)</label>
+                            <textarea id="ref-background-desc" class="ref-description" placeholder="e.g. Clean white marble countertop, soft natural lighting, minimal Japanese café interior"></textarea>
+                            <div class="ref-actions">
+                                <button id="ref-background-clear" class="action-btn">🗑️ Clear</button>
+                            </div>
+                        </div>
+
+                        <!-- Cup Reference -->
+                        <div class="ref-card">
+                            <h4>🥤 Cup / Glass Reference</h4>
+                            <input type="file" id="ref-cup-file" accept="image/*" hidden>
+                            <div class="ref-img-preview" id="ref-cup-preview">
+                                <div class="upload-hint">
+                                    <span class="hint-icon">📷</span>
+                                    Click to upload
+                                </div>
+                            </div>
+                            <label style="font-weight:600;font-size:0.82rem;display:block;margin-bottom:0.3rem;">Description (used in prompts)</label>
+                            <textarea id="ref-cup-desc" class="ref-description" placeholder="e.g. Tall clear glass with ice, 16oz, modern Japanese café style, condensation on glass"></textarea>
+                            <div class="ref-actions">
+                                <button id="ref-cup-clear" class="action-btn">🗑️ Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== HISTORY TAB ==================== -->
+            <div id="tab-history" class="tab-content">
+                <div class="studio-section">
+                    <h3>🕑 Generated Image History</h3>
+                    <p style="font-size:0.9rem;color:var(--text-light);margin-bottom:1rem;">
+                        Click any previous generation to load it back into the preview panel.
+                    </p>
+                    <div class="history-grid" id="history-grid"></div>
+                </div>
+            </div>
+
+        </div><!-- /dashboard-screen -->
+    </div><!-- /admin-container -->
+
+    <!-- Toast -->
+    <div id="studio-toast" class="studio-toast"></div>
 
     <script>
-        // Simple client side string protection
-        const EXPECTED_PIN = "3340"; // PIN corresponds to address 'Kinkerstraat 334'? Added '0'. Just a simple gate!
-        
+        // PIN Authentication (same as before)
+        const EXPECTED_PIN = "3340";
         const pinInput = document.getElementById('pin-input');
         const unlockBtn = document.getElementById('unlock-btn');
         const lockScreen = document.getElementById('lock-screen');
@@ -66,5 +245,6 @@
             if (e.key === 'Enter') checkPin();
         });
     </script>
+    <script src="image-studio.js"></script>
 </body>
 </html>
