@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kyo-oracle-v58';
+const CACHE_NAME = 'kyo-oracle-v59';
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
@@ -13,7 +13,6 @@ const ASSETS_TO_CACHE = [
   "./images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_coconut_cloud_matcha.png",
   "./images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_foam_jasmine.png",
   "./images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_hojicha_latte_lavender_coldfoam.png",
-  "./images/cold_drinks/earthy/balanced/foamy/fruity/indulgent/Iced_hojicha_vanilla_coldfoam.png",
   "./images/cold_drinks/earthy/balanced/standard/classic/energizing/iced_matcha_latte.png",
   "./images/cold_drinks/earthy/balanced/standard/classic/energizing/kocha_latte.png",
   "./images/cold_drinks/earthy/natural/foamy/floral/energizing/iced_foam_rose.png",
@@ -24,7 +23,7 @@ const ASSETS_TO_CACHE = [
   "./images/cold_drinks/earthy/sweet/foamy/fruity/indulgent/iced_cold_foam_strawberry.png",
   "./images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_mango_matcha.png",
   "./images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_strawberry_matcha.png",
-  "./images/cold_drinks/nutty_roasty/balanced/foamy/floral/chill/iced_kocha_latte.png",
+  "./images/cold_drinks/nutty_roasty/balanced/foamy/floral/chill/iced_hojicha_lavender_coldfoam.png",
   "./images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_vanilla_coldfoam.png",
   "./images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png",
 
@@ -38,6 +37,7 @@ const ASSETS_TO_CACHE = [
   "./images/hot_drinks/nutty_roasty/balanced/standard/classic/relaxed/hot_hojicha_latte.png",
   "./images/hot_drinks/nutty_roasty/natural/refreshing/dessert/chill/hojicha_hot_tea.png",
   "./images/hot_drinks/surprise/natural/refreshing/classic/chill/kocha_hot_tea.png",
+  "./images/hot_drinks/surprise/natural/refreshing/classic/chill/hot_kocha_latte.png",
   "./images/icons/icon-192.png",
   "./images/icons/icon-512.png",
   "./images/qr_code.png"

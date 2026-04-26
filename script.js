@@ -117,22 +117,6 @@ const DRINKS_DB = [
         customs: ["Classic white coconut cloud"]
     },
     {
-        name: "Mango Coconut Cloud",
-        price: "€7.20",
-        type: "special",
-        image: "images/cold_drinks/earthy/balanced/foamy/fruity/indulgent/Iced_hojicha_vanilla_coldfoam.png",
-        tags: {
-            temp: ["iced"],
-            base: ["matcha", "surprise"],
-            sweetness: ["medium"],
-            texture: ["foamy"],
-            flavor: ["fruity"],
-            mood: ["indulgent", "energizing"]
-        },
-        desc: "Fruity, perfectly balanced tropical bliss.",
-        customs: ["Contains real mango purée"]
-    },
-    {
         name: "Banana Matcha Latte",
         price: "€7.20",
         type: "special",
@@ -234,7 +218,7 @@ const DRINKS_DB = [
         name: "Hojicha Lavender Cold Foam",
         price: "€7.20",
         type: "special",
-        image: "images/cold_drinks/nutty_roasty/balanced/foamy/floral/chill/iced_kocha_latte.png",
+        image: "images/cold_drinks/nutty_roasty/balanced/foamy/floral/chill/iced_hojicha_lavender_coldfoam.png",
         tags: {
             temp: ["iced"],
             base: ["hojicha", "surprise"],
@@ -266,9 +250,9 @@ const DRINKS_DB = [
         name: "Kocha Latte",
         price: "€5.70",
         type: "daily",
-        image: "images/cold_drinks/earthy/balanced/standard/classic/energizing/kocha_latte.png",
+        image: "images/hot_drinks/surprise/natural/refreshing/classic/chill/hot_kocha_latte.png",
         tags: {
-            temp: ["hot", "iced", "any"],
+            temp: ["hot", "any"],
             base: ["matcha", "hojicha", "surprise"], // Black tea
             sweetness: ["medium"],
             texture: ["standard"],
