@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kyo-oracle-v54';
+const CACHE_NAME = 'kyo-oracle-v55';
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
@@ -27,7 +27,7 @@ const ASSETS_TO_CACHE = [
   "./images/cold_drinks/nutty_roasty/balanced/foamy/floral/chill/iced_kocha_latte.png",
   "./images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_foam_lavender.png",
   "./images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png",
-  "./images/cold_drinks/surprise/sweet/foamy/dessert/indulgent/iced_hojicha_latte.png",
+
   "./images/hot_drinks/coffee/balanced/foamy/classic/energizing/hot_cappuccino.png",
   "./images/hot_drinks/coffee/balanced/standard/classic/relaxed/hot_latte.png",
   "./images/hot_drinks/coffee/natural/refreshing/classic/energizing/hot_americano.png",

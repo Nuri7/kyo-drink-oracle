@@ -212,22 +212,6 @@ const DRINKS_DB = [
         desc: "Roasty, sweet, godly. An absolute treat.",
         customs: ["Add extra espresso shot +€1 for a kick!"]
     },
-    {
-        name: "Sticky Marshmallow Choco",
-        price: "€7.20",
-        type: "special",
-        image: "images/cold_drinks/surprise/sweet/foamy/dessert/indulgent/iced_hojicha_latte.png",
-        tags: {
-            temp: ["hot", "iced", "any"],
-            base: ["surprise", "hojicha"], 
-            sweetness: ["high"],
-            texture: ["foamy"],
-            flavor: ["dessert"],
-            mood: ["indulgent", "relaxed"]
-        },
-        desc: "Nutty, roasty, sweet comfort in a cup.",
-        customs: ["Oat milk base included"]
-    },
 
     // --- DAILY BUZZ / TEAS ---
     {
@@ -594,7 +578,7 @@ const QUESTIONS = [
         text: "Current mood?",
         weight: 0.10,
         options: [
-            { text: "Indulgent treat", tags: { mood: "indulgent" }, icon: "🎉", image: "images/cold_drinks/surprise/sweet/foamy/dessert/indulgent/iced_hojicha_latte.png" },
+            { text: "Indulgent treat", tags: { mood: "indulgent" }, icon: "🎉", image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png" },
             { text: "Energizing", tags: { mood: "energizing" }, icon: "⚡", image: "images/hot_drinks/coffee/natural/standard/classic/energizing/cortado.png" },
             { text: "Chill & relaxed", tags: { mood: "relaxed" }, icon: "🧘", image: "images/hot_drinks/surprise/natural/refreshing/classic/chill/kocha_hot_tea.png" }
         ]
