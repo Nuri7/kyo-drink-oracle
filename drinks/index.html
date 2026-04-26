@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KYŌ KLUB — Our Drinks</title>
+    <meta name="description" content="Browse the full KYŌ KLUB drink menu — matcha, hojicha, coffee, and specialty creations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#FDFBF7">
+    <style>
+        .drinks-page { width:100%; max-width:1200px; margin:0 auto; padding:2rem 1.5rem 4rem; min-height:100vh; }
+        .drinks-hero { text-align:center; margin-bottom:2rem; padding:2rem 0; }
+        .drinks-hero .klub-title { font-size:2.5rem; margin-bottom:0.5rem; }
+        .drinks-hero .subtitle { font-size:1.15rem; color:var(--text-light); margin-top:0; }
+        .back-home { display:inline-flex; align-items:center; gap:0.4rem; color:var(--matcha-dark); text-decoration:none; font-weight:600; font-size:0.95rem; margin-bottom:1.5rem; transition:var(--trans-fast); opacity:0.8; }
+        .back-home:hover { opacity:1; transform:translateX(-3px); }
+
+        .filter-bar { display:flex; justify-content:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.8rem; }
+        .filter-btn { font-family:var(--font-heading); font-weight:700; font-size:0.85rem; padding:0.55rem 1.3rem; border-radius:50px; border:2px solid rgba(0,0,0,0.08); background:rgba(255,255,255,0.6); color:var(--text-light); cursor:pointer; transition:var(--trans-fast); text-transform:uppercase; letter-spacing:0.5px; }
+        .filter-btn:hover { border-color:var(--matcha-green); color:var(--matcha-dark); background:rgba(255,255,255,0.9); }
+        .filter-btn.active { background:var(--matcha-green); color:#fff; border-color:var(--matcha-green); box-shadow:0 4px 15px var(--matcha-glow); }
+
+        /* Sub-filter bar */
+        .sub-filter-bar { display:flex; justify-content:center; flex-wrap:wrap; gap:0.45rem; margin-bottom:2rem; min-height:34px; transition:opacity 0.3s ease; }
+        .sub-filter-bar.hidden { opacity:0; pointer-events:none; min-height:0; margin:0; }
+        .sub-btn { font-family:var(--font-body); font-weight:600; font-size:0.75rem; padding:0.35rem 1rem; border-radius:50px; border:1.5px solid rgba(0,0,0,0.06); background:rgba(255,255,255,0.5); color:var(--text-light); cursor:pointer; transition:var(--trans-fast); letter-spacing:0.3px; }
+        .sub-btn:hover { border-color:var(--hojicha-brown); color:var(--text-main); background:rgba(255,255,255,0.85); }
+        .sub-btn.active { background:var(--hojicha-brown); color:#fff; border-color:var(--hojicha-brown); box-shadow:0 3px 10px rgba(140,106,93,0.3); }
+
+        .drinks-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:2rem; }
+        .drink-card { background:var(--glass-bg); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid var(--glass-border); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-soft); transition:transform 0.3s ease,box-shadow 0.3s ease; cursor:default; opacity:0; transform:translateY(20px); animation:cardReveal 0.5s ease forwards; }
+        .drink-card:hover { transform:translateY(-6px) scale(1.02); box-shadow:var(--shadow-hover); }
+        @keyframes cardReveal { to { opacity:1; transform:translateY(0); } }
+        .drink-card-img { width:100%; aspect-ratio:3/4; object-fit:cover; display:block; background:var(--bg-cream-dark); transition:transform 0.5s ease; }
+        .drink-card:hover .drink-card-img { transform:scale(1.05); }
+        .drink-card-img-wrap { overflow:hidden; position:relative; }
+        .drink-card-body { padding:1.2rem 1.4rem 1.5rem; }
+        .drink-card-name { font-family:var(--font-heading); font-weight:800; font-size:1.15rem; color:var(--text-main); margin-bottom:0.3rem; line-height:1.25; }
+        .drink-card-desc { font-size:0.88rem; color:var(--text-light); line-height:1.4; margin-bottom:0.8rem; font-style:italic; }
+        .drink-card-price { font-family:var(--font-heading); font-weight:900; font-size:1.1rem; color:var(--matcha-green); }
+        .drink-card-meta { display:flex; align-items:center; justify-content:space-between; }
+        .temp-badges { display:flex; gap:0.35rem; }
+        .temp-badge { font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; padding:0.2rem 0.55rem; border-radius:4px; }
+        .temp-badge.hot { background:#ffe4e1; color:#c0392b; }
+        .temp-badge.iced { background:#e0f7fa; color:#00838f; }
+        .drink-count { text-align:center; font-size:0.85rem; color:var(--text-light); margin-bottom:1.5rem; font-weight:500; }
+        .footer-drinks { text-align:center; margin-top:4rem; padding-top:2rem; border-top:1px solid rgba(0,0,0,0.06); color:var(--text-light); font-size:0.85rem; opacity:0.7; }
+        @media (max-width:600px) {
+            .drinks-grid { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1rem; }
+            .drinks-hero .klub-title { font-size:2rem; }
+            .drink-card-body { padding:0.8rem 1rem 1.2rem; }
+            .drink-card-name { font-size:1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+    <div class="bg-shape bg-shape-3"></div>
+    <div class="drinks-page">
+        <div class="drinks-hero">
+            <a href="../" class="back-home">← Back to Oracle</a>
+            <h1 class="klub-title">KYŌ KLUB</h1>
+            <p class="subtitle">Our Full Drink Menu</p>
+        </div>
+        <div class="filter-bar" id="filter-bar">
+            <button class="filter-btn active" data-filter="all">All Drinks</button>
+            <button class="filter-btn" data-filter="matcha">🍵 Matcha</button>
+            <button class="filter-btn" data-filter="hojicha">🍂 Hojicha</button>
+            <button class="filter-btn" data-filter="coffee">☕ Coffee</button>
+            <button class="filter-btn" data-filter="special">✨ Specials</button>
+            <button class="filter-btn" data-filter="hot">🔥 Hot</button>
+            <button class="filter-btn" data-filter="iced">🧊 Iced</button>
+        </div>
+        <div class="sub-filter-bar hidden" id="sub-filter-bar"></div>
+        <p class="drink-count" id="drink-count"></p>
+        <div class="drinks-grid" id="drinks-grid"></div>
+        <div class="footer-drinks">Kinkerstraat 334, Amsterdam ・ 100% Matcha Vibes</div>
+    </div>
+    <script>
+        const DRINKS = [
+            { name:"Strawberry Cold Foam Matcha", price:"€7.20", tags:["matcha","special","iced"], vibe:["fruity","foamy"], temp:["iced"], image:"../images/cold_drinks/earthy/sweet/foamy/fruity/indulgent/iced_cold_foam_strawberry.png", desc:"Sweet, vibrant, and incredibly foamy." },
+            { name:"Vanilla Cold Foam Matcha", price:"€7.20", tags:["matcha","special","iced"], vibe:["dessert","foamy"], temp:["iced"], image:"../images/cold_drinks/earthy/sweet/foamy/dessert/indulgent/iced_cold_foam_vanilla.png", desc:"Rich vanilla bean cloud over earthy matcha." },
+            { name:"Jasmine Cold Foam Matcha", price:"€7.20", tags:["matcha","special","iced"], vibe:["floral","foamy"], temp:["iced"], image:"../images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_foam_jasmine.png", desc:"A delicate jasmine cloud over iced umami matcha." },
+            { name:"Lavender Cold Foam Matcha", price:"€7.20", tags:["matcha","special","iced"], vibe:["floral","foamy"], temp:["iced"], image:"../images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_hojicha_latte_lavender_coldfoam.png", desc:"Calming pastel lavender foam perfectly balanced." },
+            { name:"Rose Cold Foam Matcha", price:"€7.20", tags:["matcha","special","iced"], vibe:["floral","foamy"], temp:["iced"], image:"../images/cold_drinks/earthy/natural/foamy/floral/energizing/iced_foam_rose.png", desc:"Fresh, aromatic pale pink rose cold foam." },
+            { name:"Matcha Soda", price:"€7.20", tags:["matcha","special","iced"], vibe:["classic"], temp:["iced"], image:"../images/cold_drinks/earthy/natural/refreshing/classic/energizing/iced_matcha_soda.png", desc:"Umami, refreshing, slightly sour." },
+            { name:"Coconut Cloud Matcha", price:"€7.20", tags:["matcha","special","iced"], vibe:["floral","foamy"], temp:["iced"], image:"../images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_coconut_cloud_matcha.png", desc:"Fresh, creamy, and deeply refreshing umami." },
+            { name:"Mango Coconut Cloud", price:"€7.20", tags:["matcha","special","iced"], vibe:["fruity","foamy"], temp:["iced"], image:"../images/cold_drinks/earthy/balanced/foamy/fruity/indulgent/Iced_hojicha_vanilla_coldfoam.png", desc:"Fruity, perfectly balanced tropical bliss." },
+            { name:"Banana Coconut Cloud", price:"€7.20", tags:["matcha","special","iced"], vibe:["fruity","foamy"], temp:["iced"], image:"../images/cold_drinks/earthy/sweet/foamy/fruity/indulgent/iced_banana_matcha.png", desc:"Sweet, rich, and decadently fruity." },
+            { name:"Orgeade Coconut Cloud", price:"€7.20", tags:["matcha","special","iced"], vibe:["dessert","foamy"], temp:["iced"], image:"../images/cold_drinks/earthy/balanced/foamy/dessert/chill/iced_orgeade_matcha.png", desc:"Almond-infused, beautifully balanced umami magic." },
+            { name:"Strawberry Matcha Latte", price:"€7.20", tags:["matcha","special","iced"], vibe:["fruity"], temp:["iced"], image:"../images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_strawberry_matcha.png", desc:"Umami, fruity, visually stunning." },
+            { name:"Mango Matcha Latte", price:"€7.20", tags:["matcha","special","iced"], vibe:["fruity"], temp:["iced"], image:"../images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_mango_matcha.png", desc:"Umami, tropical & fruity." },
+            { name:"Tiramisu Hojicha Latte", price:"€7.20", tags:["hojicha","special","hot","iced"], vibe:["dessert","foamy"], temp:["hot","iced"], image:"../images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png", desc:"Roasty, sweet, godly. An absolute treat." },
+            { name:"Sticky Marshmallow Choco", price:"€7.20", tags:["special","hot","iced"], vibe:["dessert","foamy"], temp:["hot","iced"], image:"../images/cold_drinks/surprise/sweet/foamy/dessert/indulgent/iced_hojicha_latte.png", desc:"Nutty, roasty, sweet comfort in a cup." },
+            { name:"Hojicha Vanilla Cold Foam", price:"€7.20", tags:["hojicha","special","iced"], vibe:["dessert","foamy"], temp:["iced"], image:"../images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_foam_lavender.png", desc:"Sweet, nutty hojicha beneath a rich vanilla cloud." },
+            { name:"Hojicha Lavender Cold Foam", price:"€7.20", tags:["hojicha","special","iced"], vibe:["floral","foamy"], temp:["iced"], image:"../images/cold_drinks/nutty_roasty/balanced/foamy/floral/chill/iced_kocha_latte.png", desc:"Perfectly balanced roasty hojicha with calming lavender." },
+            { name:"Iced Creamy Hojicha", price:"€6.50", tags:["hojicha","special","iced"], vibe:["dessert"], temp:["iced"], image:"../images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png", desc:"Rich, creamy, swirling roasted umami." },
+            { name:"Americano Matcha Foam", price:"€5.50", tags:["coffee","matcha","special","iced"], vibe:["classic","foamy"], temp:["iced"], image:"../images/cold_drinks/coffee/balanced/foamy/classic/energizing/iced_americano_matcha_foam.png", desc:"Crisp espresso balanced with a rich umami matcha cloud." },
+            { name:"Hot Chocolate", price:"€5.00", tags:["special","hot"], vibe:["dessert"], temp:["hot"], image:"../images/hot_drinks/coffee/sweet/standard/dessert/indulgent/hot_chocolate.png", desc:"Decadently rich, melted artisan chocolate with steamed milk." },
+            { name:"Matcha Latte", price:"€6.50", tags:["matcha","hot","iced"], vibe:["classic"], temp:["hot","iced"], image:"../images/cold_drinks/earthy/balanced/standard/classic/energizing/iced_matcha_latte.png", desc:"Smooth, earthy, perfectly balanced umami goodness." },
+            { name:"Kocha Latte", price:"€5.70", tags:["hot","iced"], vibe:["classic"], temp:["hot","iced"], image:"../images/cold_drinks/earthy/balanced/standard/classic/energizing/matcha_tea.png", desc:"Japanese black tea, rich and malty." },
+            { name:"Matcha Tea", price:"€6.20", tags:["matcha","hot","iced"], vibe:["classic"], temp:["hot","iced"], image:"../images/cold_drinks/earthy/natural/refreshing/classic/energizing/sencha_tea.png", desc:"Pure, high-grade ceremonial matcha." },
+            { name:"Hot Hojicha Tea", price:"€4.20", tags:["hojicha","hot"], vibe:["classic"], temp:["hot"], image:"../images/hot_drinks/nutty_roasty/natural/refreshing/dessert/chill/hojicha_hot_tea.png", desc:"Deeply comforting roasted green tea." },
+            { name:"Hot Kocha Tea", price:"€4.20", tags:["hot"], vibe:["classic"], temp:["hot"], image:"../images/hot_drinks/surprise/natural/refreshing/classic/chill/kocha_hot_tea.png", desc:"Comforting, smooth Japanese black tea." },
+            { name:"Iced Latte", price:"€4.50", tags:["coffee","iced"], vibe:["classic"], temp:["iced"], image:"../images/cold_drinks/coffee/balanced/standard/classic/energizing/iced_latte.png", desc:"Bold espresso meets creamy milk over ice." },
+            { name:"Flat White", price:"€4.20", tags:["coffee","hot"], vibe:["classic"], temp:["hot"], image:"../images/hot_drinks/coffee/natural/standard/classic/energizing/flat_white.png", desc:"Strong, smooth, velvety microfoam." },
+            { name:"Iced Americano", price:"€3.70", tags:["coffee","iced"], vibe:["classic"], temp:["iced"], image:"../images/cold_drinks/coffee/natural/refreshing/classic/energizing/iced_americano.png", desc:"Crisp, bold espresso stretched with cold water." },
+            { name:"Cortado", price:"€3.70", tags:["coffee","hot"], vibe:["classic"], temp:["hot"], image:"../images/hot_drinks/coffee/natural/standard/classic/energizing/cortado.png", desc:"Equal parts espresso & steamed milk." },
+            { name:"Cappuccino", price:"€4.50", tags:["coffee","hot"], vibe:["classic","foamy"], temp:["hot"], image:"../images/hot_drinks/coffee/balanced/foamy/classic/energizing/hot_cappuccino.png", desc:"Rich espresso topped with velvety foam." },
+            { name:"Espresso", price:"€3.00", tags:["coffee","hot"], vibe:["classic"], temp:["hot"], image:"../images/hot_drinks/coffee/natural/standard/classic/energizing/hot_espresso.png", desc:"A pure, intense shot of perfectly extracted coffee." },
+            { name:"Hot Latte", price:"€4.50", tags:["coffee","hot"], vibe:["classic"], temp:["hot"], image:"../images/hot_drinks/coffee/balanced/standard/classic/relaxed/hot_latte.png", desc:"Smooth espresso blended with steamed milk." },
+            { name:"Hot Americano", price:"€3.80", tags:["coffee","hot"], vibe:["classic"], temp:["hot"], image:"../images/hot_drinks/coffee/natural/refreshing/classic/energizing/hot_americano.png", desc:"Bold espresso drawn out with hot water." },
+            { name:"Hot Hojicha Latte", price:"€5.20", tags:["hojicha","hot"], vibe:["classic"], temp:["hot"], image:"../images/hot_drinks/nutty_roasty/balanced/standard/classic/relaxed/hot_hojicha_latte.png", desc:"Warm roasted green tea folded into steamed milk." }
+        ];
+
+        const SUB_FILTERS = [
+            { key:"fruity", label:"🍓 Fruity" },
+            { key:"floral", label:"🌸 Floral" },
+            { key:"dessert", label:"🍰 Dessert" },
+            { key:"classic", label:"🍃 Classic" },
+            { key:"foamy", label:"☁️ Foamy" }
+        ];
+
+        const grid = document.getElementById('drinks-grid');
+        const countEl = document.getElementById('drink-count');
+        const subBar = document.getElementById('sub-filter-bar');
+        let activeFilter = 'all';
+        let activeSub = null;
+
+        function getFiltered() {
+            let list = activeFilter === 'all' ? DRINKS : DRINKS.filter(d => d.tags.includes(activeFilter));
+            if (activeSub) list = list.filter(d => d.vibe.includes(activeSub));
+            return list;
+        }
+
+        function renderSubFilters() {
+            const mainFiltered = activeFilter === 'all' ? DRINKS : DRINKS.filter(d => d.tags.includes(activeFilter));
+            // Only show sub-filters if there are multiple vibes present
+            const availableVibes = new Set();
+            mainFiltered.forEach(d => d.vibe.forEach(v => availableVibes.add(v)));
+            if (availableVibes.size <= 1) { subBar.classList.add('hidden'); subBar.innerHTML=''; return; }
+
+            subBar.classList.remove('hidden');
+            subBar.innerHTML = `<button class="sub-btn ${!activeSub ? 'active' : ''}" data-sub="all">Show All</button>`;
+            SUB_FILTERS.forEach(sf => {
+                if (!availableVibes.has(sf.key)) return;
+                const count = mainFiltered.filter(d => d.vibe.includes(sf.key)).length;
+                subBar.innerHTML += `<button class="sub-btn ${activeSub===sf.key?'active':''}" data-sub="${sf.key}">${sf.label} (${count})</button>`;
+            });
+        }
+
+        function renderDrinks() {
+            const filtered = getFiltered();
+            countEl.textContent = `Showing ${filtered.length} drink${filtered.length !== 1 ? 's' : ''}`;
+            grid.innerHTML = '';
+            filtered.forEach((drink, i) => {
+                const card = document.createElement('div');
+                card.className = 'drink-card';
+                card.style.animationDelay = `${i * 0.05}s`;
+                card.innerHTML = `
+                    <div class="drink-card-img-wrap">
+                        <img class="drink-card-img" src="${drink.image}" alt="${drink.name}" loading="lazy">
+                    </div>
+                    <div class="drink-card-body">
+                        <div class="drink-card-name">${drink.name}</div>
+                        <div class="drink-card-desc">${drink.desc}</div>
+                        <div class="drink-card-meta">
+                            <div class="drink-card-price">${drink.price}</div>
+                            <div class="temp-badges">
+                                ${drink.temp.map(t => `<span class="temp-badge ${t}">${t==='iced'?'🧊 Iced':'🔥 Hot'}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        document.getElementById('filter-bar').addEventListener('click', e => {
+            const btn = e.target.closest('.filter-btn');
+            if (!btn) return;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeFilter = btn.dataset.filter;
+            activeSub = null;
+            renderSubFilters();
+            renderDrinks();
+        });
+
+        subBar.addEventListener('click', e => {
+            const btn = e.target.closest('.sub-btn');
+            if (!btn) return;
+            activeSub = btn.dataset.sub === 'all' ? null : btn.dataset.sub;
+            subBar.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderDrinks();
+        });
+
+        renderSubFilters();
+        renderDrinks();
+    </script>
+</body>
+</html>
