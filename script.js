@@ -196,22 +196,6 @@ const DRINKS_DB = [
         desc: "Umami, tropical & fruity.",
         customs: ["Oat milk base included"]
     },
-    {
-        name: "Tiramisu Hojicha Latte",
-        price: "€7.20",
-        type: "special",
-        image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png",
-        tags: {
-            temp: ["hot", "iced", "any"],
-            base: ["hojicha", "surprise"],
-            sweetness: ["high"],
-            texture: ["foamy", "standard"],
-            flavor: ["dessert"],
-            mood: ["indulgent"]
-        },
-        desc: "Roasty, sweet, godly. An absolute treat.",
-        customs: ["Add extra espresso shot +€1 for a kick!"]
-    },
 
     // --- DAILY BUZZ / TEAS ---
     {
@@ -234,7 +218,7 @@ const DRINKS_DB = [
         name: "Hojicha Vanilla Cold Foam",
         price: "€7.20",
         type: "special",
-        image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_foam_lavender.png",
+        image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_vanilla_coldfoam.png",
         tags: {
             temp: ["iced"],
             base: ["hojicha", "surprise"],
@@ -282,7 +266,7 @@ const DRINKS_DB = [
         name: "Kocha Latte",
         price: "€5.70",
         type: "daily",
-        image: "images/cold_drinks/earthy/balanced/standard/classic/energizing/matcha_tea.png",
+        image: "images/cold_drinks/earthy/balanced/standard/classic/energizing/kocha_latte.png",
         tags: {
             temp: ["hot", "iced", "any"],
             base: ["matcha", "hojicha", "surprise"], // Black tea
@@ -569,7 +553,7 @@ const QUESTIONS = [
         options: [
             { text: "Fruity (strawberry/mango)", tags: { flavor: "fruity" }, icon: "🍓", image: "images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_mango_matcha.png" },
             { text: "Floral/coconut", tags: { flavor: "floral" }, icon: "🌸", image: "images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_hojicha_latte_lavender_coldfoam.png" },
-            { text: "Chocolatey/roasty dessert", tags: { flavor: "dessert" }, icon: "🍫", image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_foam_lavender.png" },
+            { text: "Chocolatey/roasty dessert", tags: { flavor: "dessert" }, icon: "🍫", image: "images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_vanilla_coldfoam.png" },
             { text: "Pure classic", tags: { flavor: "classic" }, icon: "🍃", image: "images/hot_drinks/coffee/natural/standard/classic/energizing/flat_white.png" }
         ]
     },

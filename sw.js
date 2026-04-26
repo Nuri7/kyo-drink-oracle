@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kyo-oracle-v57';
+const CACHE_NAME = 'kyo-oracle-v58';
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
@@ -15,7 +15,7 @@ const ASSETS_TO_CACHE = [
   "./images/cold_drinks/earthy/balanced/foamy/floral/chill/iced_hojicha_latte_lavender_coldfoam.png",
   "./images/cold_drinks/earthy/balanced/foamy/fruity/indulgent/Iced_hojicha_vanilla_coldfoam.png",
   "./images/cold_drinks/earthy/balanced/standard/classic/energizing/iced_matcha_latte.png",
-  "./images/cold_drinks/earthy/balanced/standard/classic/energizing/matcha_tea.png",
+  "./images/cold_drinks/earthy/balanced/standard/classic/energizing/kocha_latte.png",
   "./images/cold_drinks/earthy/natural/foamy/floral/energizing/iced_foam_rose.png",
   "./images/cold_drinks/earthy/natural/refreshing/classic/energizing/iced_matcha_soda.png",
   "./images/cold_drinks/earthy/natural/refreshing/classic/energizing/sencha_tea.png",
@@ -25,7 +25,7 @@ const ASSETS_TO_CACHE = [
   "./images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_mango_matcha.png",
   "./images/cold_drinks/earthy/sweet/standard/fruity/indulgent/iced_strawberry_matcha.png",
   "./images/cold_drinks/nutty_roasty/balanced/foamy/floral/chill/iced_kocha_latte.png",
-  "./images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_foam_lavender.png",
+  "./images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_vanilla_coldfoam.png",
   "./images/cold_drinks/nutty_roasty/sweet/foamy/dessert/indulgent/iced_hojicha_iced_creamy.png",
 
   "./images/hot_drinks/coffee/balanced/foamy/classic/energizing/hot_cappuccino.png",
