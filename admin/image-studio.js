@@ -4,7 +4,7 @@
 
 const ImageStudio = (() => {
     // --- State ---
-    let apiKey = localStorage.getItem('kyo_openai_key') || '';
+    let replicateToken = localStorage.getItem('kyo_replicate_token') || '';
     let githubToken = localStorage.getItem('kyo_github_token') || '';
     let generatedImageUrl = null;
     let generatedImageB64 = null;
@@ -97,64 +97,63 @@ const ImageStudio = (() => {
     }
 
     // --- API Calls ---
-    async function generateImage(prompt, size = '1024x1024') {
-        if (!apiKey) throw new Error('API key not set');
+    async function generateImage(prompt, size = '3:4') {
+        if (!replicateToken) throw new Error('Replicate API token not set');
 
-        const response = await fetch('https://api.openai.com/v1/images/generations', {
+        // Step 1: Create the prediction
+        const createResponse = await fetch('https://api.replicate.com/v1/models/black-forest-labs/flux-pro/predictions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
+                'Authorization': `Bearer ${replicateToken}`,
+                'Prefer': 'wait'
             },
             body: JSON.stringify({
-                model: 'dall-e-3',
-                prompt: prompt,
-                n: 1,
-                size: size,
-                quality: 'hd',
-                response_format: 'b64_json'
+                input: {
+                    prompt: prompt,
+                    aspect_ratio: size,
+                    output_format: "png"
+                }
             })
         });
 
-        if (!response.ok) {
-            const err = await response.json().catch(() => ({}));
-            throw new Error(err.error?.message || `API error ${response.status}`);
+        if (!createResponse.ok) {
+            const err = await createResponse.json().catch(() => ({}));
+            throw new Error(err.detail || err.error?.message || `API error ${createResponse.status}`);
         }
 
-        const data = await response.json();
-        return {
-            b64: data.data[0].b64_json,
-            revisedPrompt: data.data[0].revised_prompt
-        };
-    }
+        let prediction = await createResponse.json();
 
-    async function editImage(imageB64, instruction) {
-        if (!apiKey) throw new Error('API key not set');
+        // Step 2: Poll until complete (if 'Prefer: wait' timed out or isn't supported)
+        while (prediction.status !== "succeeded" && prediction.status !== "failed" && prediction.status !== "canceled") {
+            await new Promise(r => setTimeout(r, 1500));
+            const pollResponse = await fetch(prediction.urls.get, {
+                headers: { 'Authorization': `Bearer ${replicateToken}` }
+            });
+            if (!pollResponse.ok) throw new Error('Failed to check prediction status');
+            prediction = await pollResponse.json();
+        }
 
-        // Convert b64 to blob for FormData
-        const imageBlob = await fetch(`data:image/png;base64,${imageB64}`).then(r => r.blob());
+        if (prediction.status !== "succeeded") {
+            throw new Error(`Generation failed: ${prediction.error || prediction.status}`);
+        }
 
-        const formData = new FormData();
-        formData.append('image', imageBlob, 'image.png');
-        formData.append('prompt', instruction);
-        formData.append('model', 'dall-e-2');
-        formData.append('n', '1');
-        formData.append('size', '1024x1024');
-        formData.append('response_format', 'b64_json');
-
-        const response = await fetch('https://api.openai.com/v1/images/edits', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${apiKey}` },
-            body: formData
+        const imageUrl = prediction.output;
+        
+        // Step 3: Fetch the image and convert to base64
+        // Use a CORS proxy if necessary, but Replicate's output URLs usually have permissive CORS
+        const imgResponse = await fetch(imageUrl);
+        const blob = await imgResponse.blob();
+        const b64 = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+            reader.readAsDataURL(blob);
         });
 
-        if (!response.ok) {
-            const err = await response.json().catch(() => ({}));
-            throw new Error(err.error?.message || `API error ${response.status}`);
-        }
-
-        const data = await response.json();
-        return { b64: data.data[0].b64_json };
+        return {
+            b64: b64,
+            revisedPrompt: prompt
+        };
     }
 
     // --- GitHub Push ---
@@ -251,7 +250,6 @@ const ImageStudio = (() => {
         setupApiKeyUI();
         setupPresets();
         setupGenerateBtn();
-        setupEditBtn();
         setupRefManager();
         setupGitHubUI();
         setupTabs();
@@ -308,8 +306,8 @@ const ImageStudio = (() => {
         const status = document.getElementById('api-key-status');
         if (!input) return;
 
-        if (apiKey) {
-            input.value = '••••••••' + apiKey.slice(-6);
+        if (replicateToken) {
+            input.value = '••••••••' + replicateToken.slice(-6);
             input.dataset.masked = 'true';
             if (status) { status.className = 'api-key-status connected'; status.textContent = '✓ Connected'; }
         }
@@ -321,8 +319,8 @@ const ImageStudio = (() => {
         saveBtn?.addEventListener('click', () => {
             const val = input.value.trim();
             if (val && !val.startsWith('••')) {
-                apiKey = val;
-                localStorage.setItem('kyo_openai_key', val);
+                replicateToken = val;
+                localStorage.setItem('kyo_replicate_token', val);
                 input.value = '••••••••' + val.slice(-6);
                 input.dataset.masked = 'true';
                 if (status) { status.className = 'api-key-status connected'; status.textContent = '✓ Connected'; }
@@ -347,7 +345,7 @@ const ImageStudio = (() => {
         if (!btn) return;
 
         btn.addEventListener('click', async () => {
-            if (!apiKey) { showToast('Please set your OpenAI API key first', 'error'); return; }
+            if (!replicateToken) { showToast('Please set your Replicate API token first', 'error'); return; }
             if (selectedDrinkIndex < 0) { showToast('Please select a drink first', 'error'); return; }
 
             const drink = DRINKS[selectedDrinkIndex];
@@ -423,60 +421,7 @@ const ImageStudio = (() => {
         });
     }
 
-    function setupEditBtn() {
-        const btn = document.getElementById('edit-btn');
-        if (!btn) return;
 
-        btn.addEventListener('click', async () => {
-            if (!apiKey) { showToast('Set your API key first', 'error'); return; }
-
-            const instruction = document.getElementById('edit-instruction')?.value?.trim();
-            if (!instruction) { showToast('Enter an edit instruction', 'error'); return; }
-
-            // Use generated image or try to load current drink image
-            let sourceB64 = generatedImageB64;
-            if (!sourceB64 && selectedDrinkIndex >= 0) {
-                try {
-                    const drink = DRINKS[selectedDrinkIndex];
-                    const img = await fetch(drink.image);
-                    const blob = await img.blob();
-                    sourceB64 = await new Promise(resolve => {
-                        const reader = new FileReader();
-                        reader.onloadend = () => resolve(reader.result.split(',')[1]);
-                        reader.readAsDataURL(blob);
-                    });
-                } catch (e) {
-                    showToast('Could not load source image for editing', 'error');
-                    return;
-                }
-            }
-
-            if (!sourceB64) { showToast('Generate or select an image first', 'error'); return; }
-
-            btn.classList.add('loading');
-            btn.disabled = true;
-            log(`Editing image: "${instruction}"`, 'info');
-
-            try {
-                const result = await editImage(sourceB64, instruction);
-                generatedImageB64 = result.b64;
-                generatedImageUrl = `data:image/png;base64,${result.b64}`;
-
-                const container = document.getElementById('generated-preview');
-                if (container) container.innerHTML = `<img src="${generatedImageUrl}" alt="Edited image">`;
-
-                document.querySelectorAll('.post-gen-action').forEach(b => b.disabled = false);
-                log('✓ Edit applied successfully!', 'success');
-                showToast('Edit applied!', 'success');
-            } catch (err) {
-                log(`✗ Edit failed: ${err.message}`, 'error');
-                showToast(`Edit failed: ${err.message}`, 'error');
-            } finally {
-                btn.classList.remove('loading');
-                btn.disabled = false;
-            }
-        });
-    }
 
     function setupRefManager() {
         ['background', 'cup'].forEach(key => {
