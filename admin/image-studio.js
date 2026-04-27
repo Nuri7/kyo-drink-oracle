@@ -106,7 +106,7 @@ const ImageStudio = (() => {
         if (!replicateToken) throw new Error('Replicate API token not set');
 
         // Step 1: Create the prediction (wrapped in CORS proxy)
-        const createResponse = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://api.replicate.com/v1/models/black-forest-labs/flux-pro/predictions'), {
+        const createResponse = await fetch('https://cors.eu.org/https://api.replicate.com/v1/models/black-forest-labs/flux-pro/predictions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ const ImageStudio = (() => {
         // Step 2: Poll until complete (if 'Prefer: wait' timed out or isn't supported)
         while (prediction.status !== "succeeded" && prediction.status !== "failed" && prediction.status !== "canceled") {
             await new Promise(r => setTimeout(r, 1500));
-            const pollResponse = await fetch('https://corsproxy.io/?' + encodeURIComponent(prediction.urls.get), {
+            const pollResponse = await fetch('https://cors.eu.org/' + prediction.urls.get, {
                 headers: { 'Authorization': `Bearer ${replicateToken}` }
             });
             if (!pollResponse.ok) throw new Error('Failed to check prediction status');
@@ -143,11 +143,14 @@ const ImageStudio = (() => {
             throw new Error(`Generation failed: ${prediction.error || prediction.status}`);
         }
 
-        const imageUrl = prediction.output;
+        let imageUrl = prediction.output;
+        if (Array.isArray(imageUrl)) {
+            imageUrl = imageUrl[0];
+        }
         
         // Step 3: Fetch the image and convert to base64
-        // Wrap the image fetch in CORS proxy just in case Replicate's CDN restricts it
-        const imgResponse = await fetch('https://corsproxy.io/?' + encodeURIComponent(imageUrl));
+        // Replicate's CDN (replicate.delivery) allows CORS directly
+        const imgResponse = await fetch(imageUrl);
         const blob = await imgResponse.blob();
         const b64 = await new Promise((resolve) => {
             const reader = new FileReader();
