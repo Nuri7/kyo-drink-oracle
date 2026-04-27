@@ -5,7 +5,7 @@
 const ImageStudio = (() => {
     // --- State ---
     const API_BASE = 'https://kyoklubv.vercel.app'; // Vercel backend
-    const STUDIO_PIN = '3340'; // Reuse admin PIN for API auth
+    const STUDIO_PIN = 'kyoklub123'; // Must match STUDIO_PASSWORD on backend
     let githubToken = ''; // No longer needed client-side
     let generatedImageUrl = null;
     let generatedImageB64 = null;
@@ -495,38 +495,44 @@ const ImageStudio = (() => {
             }
         });
 
-        // Replace Current Image button
-        document.getElementById('replace-btn')?.addEventListener('click', () => {
+        // Replace Current Image button — pushes directly to GitHub via backend
+        document.getElementById('replace-btn')?.addEventListener('click', async () => {
             if (!generatedImageB64 || selectedDrinkIndex < 0) return;
             const drink = DRINKS[selectedDrinkIndex];
+            const btn = document.getElementById('replace-btn');
 
-            // Extract just the filename from the image path
-            const pathParts = drink.image.split('/');
-            const exactFilename = pathParts[pathParts.length - 1];
+            btn.disabled = true;
+            btn.textContent = '⏳ Replacing...';
+            log(`🚀 Replacing image for "${drink.name}" in GitHub repo...`, 'info');
 
-            // Download with the exact filename
-            downloadImage(generatedImageB64, exactFilename);
+            try {
+                const result = await pushToGitHub(drink.image, generatedImageB64);
 
-            // Update the current preview in the Image Studio
-            const currentPreview = document.getElementById('current-preview');
-            if (currentPreview) {
-                currentPreview.innerHTML = `<img src="data:image/png;base64,${generatedImageB64}" alt="${drink.name}">`;
-            }
-
-            // Update the menu grid card
-            const menuCards = document.querySelectorAll('#menu-grid .menu-card');
-            if (menuCards[selectedDrinkIndex]) {
-                const imgEl = menuCards[selectedDrinkIndex].querySelector('.menu-card-img');
-                if (imgEl && imgEl.tagName === 'IMG') {
-                    imgEl.src = `data:image/png;base64,${generatedImageB64}`;
+                // Update the current preview in the Image Studio
+                const currentPreview = document.getElementById('current-preview');
+                if (currentPreview) {
+                    currentPreview.innerHTML = `<img src="data:image/png;base64,${generatedImageB64}" alt="${drink.name}">`;
                 }
-            }
 
-            // Show the target path for manual file replacement
-            const targetPath = drink.image.replace('../', '');
-            log(`✅ Downloaded as "${exactFilename}"`, 'success');
-            log(`📂 Replace file at: ${targetPath}`, 'info');
-            showToast(`Saved as "${exactFilename}" — move it to ${targetPath}`, 'success');
+                // Update the menu grid card
+                const menuCards = document.querySelectorAll('#menu-grid .menu-card');
+                if (menuCards[selectedDrinkIndex]) {
+                    const imgEl = menuCards[selectedDrinkIndex].querySelector('.menu-card-img');
+                    if (imgEl && imgEl.tagName === 'IMG') {
+                        imgEl.src = `data:image/png;base64,${generatedImageB64}`;
+                    }
+                }
+
+                log(`✅ Image replaced in GitHub repo!`, 'success');
+                log(`📂 Path: ${result.path || drink.image}`, 'info');
+                showToast(`Image replaced for "${drink.name}"! GitHub Pages will redeploy automatically.`, 'success');
+            } catch (err) {
+                log(`✗ Replace failed: ${err.message}`, 'error');
+                showToast(`Replace failed: ${err.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '✅ Replace Current Image';
+            }
         });
 
         // Download button
