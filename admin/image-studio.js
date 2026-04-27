@@ -74,25 +74,30 @@ const ImageStudio = (() => {
 
         const bgRef = getRef('background');
         const cupRef = getRef('cup');
+        const logoRef = getRef('logo');
         const useBg = document.getElementById('use-bg-ref')?.checked;
         const useCup = document.getElementById('use-cup-ref')?.checked;
+        const useLogo = document.getElementById('use-logo-ref')?.checked;
 
-        let prompt = `Professional product photography of "${drink.name}" drink. ${drink.desc}. `;
-        prompt += `${PRESETS[activePreset]}. `;
+        let prompt = `Professional product photography of "${drink.name}" iced drink. The drink features distinct layers and ingredients: ${drink.desc}. `;
+        
+        if (useCup && cupRef.description) {
+            prompt += `The drink MUST be served exactly in the cup/glass described as: ${cupRef.description}. `;
+        } else {
+            prompt += `Served in a modern, clear glass suitable for a Japanese café. `;
+        }
 
         if (useBg && bgRef.description) {
-            prompt += `Background setting: ${bgRef.description}. `;
+            prompt += `The background MUST exactly match this setting: ${bgRef.description}. `;
         } else {
-            prompt += `On a clean, elegant surface with soft natural lighting. `;
+            prompt += `On a clean, elegant surface with soft natural daylight. `;
         }
 
-        if (useCup && cupRef.description) {
-            prompt += `Served in: ${cupRef.description}. `;
-        } else {
-            prompt += `In a modern, clear glass or ceramic cup suitable for a Japanese café. `;
+        if (useLogo && logoRef.description) {
+            prompt += `The following logo MUST be subtly incorporated into the scene (e.g., printed on a high-quality coaster or delicately etched onto the glass): ${logoRef.description}. `;
         }
 
-        prompt += `Japanese café aesthetic, KYŌ KLUB brand. No text, no labels, no watermarks, no human hands.`;
+        prompt += `${PRESETS[activePreset]}. Extremely photorealistic, 4K, high-end commercial food photography, perfect lighting, highly detailed textures.`;
         return prompt;
     }
 
@@ -424,7 +429,7 @@ const ImageStudio = (() => {
 
 
     function setupRefManager() {
-        ['background', 'cup'].forEach(key => {
+        ['background', 'cup', 'logo'].forEach(key => {
             const fileInput = document.getElementById(`ref-${key}-file`);
             const preview = document.getElementById(`ref-${key}-preview`);
             const descInput = document.getElementById(`ref-${key}-desc`);
