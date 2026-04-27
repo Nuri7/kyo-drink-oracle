@@ -110,8 +110,7 @@ const ImageStudio = (() => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${replicateToken}`,
-                'Prefer': 'wait'
+                'Authorization': `Bearer ${replicateToken}`
             },
             body: JSON.stringify({
                 input: {
