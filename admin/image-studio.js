@@ -4,7 +4,7 @@
 
 const ImageStudio = (() => {
     // --- State ---
-    let replicateToken = 'r8_7StOkfCBWD5J2AeRavTGUjsmwwtN2981xYsij';
+    const geminiApiKey = 'AIzaSyBrvWtI-4GI-J6lu5FT0I4hvBMpTPBw4Ok';
     let githubToken = localStorage.getItem('kyo_github_token') || '';
     let generatedImageUrl = null;
     let generatedImageB64 = null;
@@ -151,70 +151,73 @@ const ImageStudio = (() => {
         return prompt;
     }
 
-    // --- API Calls ---
-    async function generateImage(prompt, inputImages = [], size = '3:4') {
-        if (!replicateToken) throw new Error('Replicate API token not set');
+    // --- API Calls (Gemini / Nano Banana Pro) ---
+    async function generateImage(prompt, inputImages = []) {
+        if (!geminiApiKey) throw new Error('Gemini API key not set');
 
-        // Build input payload
-        const inputPayload = {
-            prompt: prompt,
-            aspect_ratio: size,
-            output_format: "png"
+        // Build multimodal parts: text prompt + reference images
+        const parts = [{ text: prompt }];
+
+        // Add each reference image as an inline_data part
+        for (const dataUrl of inputImages) {
+            // dataUrl format: "data:image/jpeg;base64,/9j/4AAQ..."
+            const match = dataUrl.match(/^data:(image\/\w+);base64,(.+)$/);
+            if (match) {
+                parts.push({
+                    inline_data: {
+                        mime_type: match[1],
+                        data: match[2]
+                    }
+                });
+            }
+        }
+
+        const requestBody = {
+            contents: [{ parts: parts }],
+            generationConfig: {
+                responseModalities: ["TEXT", "IMAGE"]
+            }
         };
 
-        // If reference images are provided, include them
-        if (inputImages.length > 0) {
-            inputPayload.input_images = inputImages;
+        const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${geminiApiKey}`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody)
+            }
+        );
+
+        if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            throw new Error(err.error?.message || `API error ${response.status}`);
         }
 
-        // Step 1: Create the prediction (FLUX 2 Pro with multi-reference support)
-        const createResponse = await fetch('https://cors.eu.org/https://api.replicate.com/v1/models/black-forest-labs/flux-2-pro/predictions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${replicateToken}`
-            },
-            body: JSON.stringify({ input: inputPayload })
-        });
+        const result = await response.json();
 
-        if (!createResponse.ok) {
-            const err = await createResponse.json().catch(() => ({}));
-            throw new Error(err.detail || err.error?.message || `API error ${createResponse.status}`);
+        // Extract the generated image from the response
+        const candidates = result.candidates;
+        if (!candidates || candidates.length === 0) {
+            throw new Error('No candidates returned from Gemini');
         }
 
-        let prediction = await createResponse.json();
-
-        // Step 2: Poll until complete
-        while (prediction.status !== "succeeded" && prediction.status !== "failed" && prediction.status !== "canceled") {
-            await new Promise(r => setTimeout(r, 2000));
-            const pollResponse = await fetch('https://cors.eu.org/' + prediction.urls.get, {
-                headers: { 'Authorization': `Bearer ${replicateToken}` }
-            });
-            if (!pollResponse.ok) throw new Error('Failed to check prediction status');
-            prediction = await pollResponse.json();
-            log(`⏳ Status: ${prediction.status}...`, 'info');
+        let imageB64 = null;
+        for (const part of candidates[0].content.parts) {
+            if (part.inlineData) {
+                imageB64 = part.inlineData.data;
+                break;
+            }
         }
 
-        if (prediction.status !== "succeeded") {
-            throw new Error(`Generation failed: ${prediction.error || prediction.status}`);
+        if (!imageB64) {
+            // Check if only text was returned (safety filter or no image)
+            const textParts = candidates[0].content.parts.filter(p => p.text);
+            const msg = textParts.map(p => p.text).join(' ') || 'No image generated';
+            throw new Error(`Gemini returned text only: ${msg.substring(0, 200)}`);
         }
-
-        let imageUrl = prediction.output;
-        if (Array.isArray(imageUrl)) {
-            imageUrl = imageUrl[0];
-        }
-        
-        // Step 3: Fetch the image and convert to base64
-        const imgResponse = await fetch(imageUrl);
-        const blob = await imgResponse.blob();
-        const b64 = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result.split(',')[1]);
-            reader.readAsDataURL(blob);
-        });
 
         return {
-            b64: b64,
+            b64: imageB64,
             revisedPrompt: prompt
         };
     }
@@ -398,7 +401,7 @@ const ImageStudio = (() => {
         if (!btn) return;
 
         btn.addEventListener('click', async () => {
-            if (!replicateToken) { showToast('Please set your Replicate API token first', 'error'); return; }
+            if (!geminiApiKey) { showToast('Gemini API key not configured', 'error'); return; }
             if (selectedDrinkIndex < 0) { showToast('Please select a drink first', 'error'); return; }
 
             const drink = DRINKS[selectedDrinkIndex];
