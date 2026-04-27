@@ -105,8 +105,8 @@ const ImageStudio = (() => {
     async function generateImage(prompt, size = '3:4') {
         if (!replicateToken) throw new Error('Replicate API token not set');
 
-        // Step 1: Create the prediction
-        const createResponse = await fetch('https://api.replicate.com/v1/models/black-forest-labs/flux-pro/predictions', {
+        // Step 1: Create the prediction (wrapped in CORS proxy)
+        const createResponse = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://api.replicate.com/v1/models/black-forest-labs/flux-pro/predictions'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ const ImageStudio = (() => {
         // Step 2: Poll until complete (if 'Prefer: wait' timed out or isn't supported)
         while (prediction.status !== "succeeded" && prediction.status !== "failed" && prediction.status !== "canceled") {
             await new Promise(r => setTimeout(r, 1500));
-            const pollResponse = await fetch(prediction.urls.get, {
+            const pollResponse = await fetch('https://corsproxy.io/?' + encodeURIComponent(prediction.urls.get), {
                 headers: { 'Authorization': `Bearer ${replicateToken}` }
             });
             if (!pollResponse.ok) throw new Error('Failed to check prediction status');
@@ -146,8 +146,8 @@ const ImageStudio = (() => {
         const imageUrl = prediction.output;
         
         // Step 3: Fetch the image and convert to base64
-        // Use a CORS proxy if necessary, but Replicate's output URLs usually have permissive CORS
-        const imgResponse = await fetch(imageUrl);
+        // Wrap the image fetch in CORS proxy just in case Replicate's CDN restricts it
+        const imgResponse = await fetch('https://corsproxy.io/?' + encodeURIComponent(imageUrl));
         const blob = await imgResponse.blob();
         const b64 = await new Promise((resolve) => {
             const reader = new FileReader();
