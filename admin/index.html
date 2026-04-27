@@ -102,6 +102,9 @@
                         <label class="ref-toggle">
                             <input type="checkbox" id="use-cup-ref" checked> Use cup/glass reference
                         </label>
+                        <label class="ref-toggle">
+                            <input type="checkbox" id="use-logo-ref" checked> Use logo reference
+                        </label>
                     </div>
 
                     <button id="generate-btn" class="generate-btn">🎨 Generate Image</button>
@@ -189,6 +192,23 @@
                             <textarea id="ref-cup-desc" class="ref-description" placeholder="e.g. Tall clear glass with ice, 16oz, modern Japanese café style, condensation on glass"></textarea>
                             <div class="ref-actions">
                                 <button id="ref-cup-clear" class="action-btn">🗑️ Clear</button>
+                            </div>
+                        </div>
+
+                        <!-- Logo Reference -->
+                        <div class="ref-card">
+                            <h4>✨ Logo Reference</h4>
+                            <input type="file" id="ref-logo-file" accept="image/*" hidden>
+                            <div class="ref-img-preview" id="ref-logo-preview">
+                                <div class="upload-hint">
+                                    <span class="hint-icon">📷</span>
+                                    Click to upload
+                                </div>
+                            </div>
+                            <label style="font-weight:600;font-size:0.82rem;display:block;margin-bottom:0.3rem;">Description (used in prompts)</label>
+                            <textarea id="ref-logo-desc" class="ref-description" placeholder="e.g. KYŌ KLUB text logo subtly etched onto the glass or on a coaster"></textarea>
+                            <div class="ref-actions">
+                                <button id="ref-logo-clear" class="action-btn">🗑️ Clear</button>
                             </div>
                         </div>
                     </div>
