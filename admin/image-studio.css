@@ -536,6 +536,23 @@
     transform: none;
 }
 
+.action-btn.replace {
+    background: var(--matcha-green);
+    color: #fff;
+    border-color: var(--matcha-green);
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.85rem 1.5rem;
+    font-weight: 700;
+}
+
+.action-btn.replace:hover:not(:disabled) {
+    background: var(--matcha-dark);
+    border-color: var(--matcha-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px var(--matcha-glow);
+}
+
 /* --- Reference Manager --- */
 .ref-grid {
     display: grid;
