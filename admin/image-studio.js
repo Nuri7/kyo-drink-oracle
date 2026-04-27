@@ -64,8 +64,21 @@ const ImageStudio = (() => {
     }
 
     function setRef(key, image, description) {
-        if (image) localStorage.setItem(`kyo_ref_${key}_img`, image);
-        if (description !== undefined) localStorage.setItem(`kyo_ref_${key}_desc`, description);
+        try {
+            if (image) localStorage.setItem(`kyo_ref_${key}_img`, image);
+            if (description !== undefined) localStorage.setItem(`kyo_ref_${key}_desc`, description);
+        } catch (e) {
+            console.warn('localStorage quota exceeded, clearing old data...');
+            // Clear history to make room for references
+            localStorage.removeItem('kyo_image_history');
+            imageHistory = [];
+            try {
+                if (image) localStorage.setItem(`kyo_ref_${key}_img`, image);
+                if (description !== undefined) localStorage.setItem(`kyo_ref_${key}_desc`, description);
+            } catch (_) {
+                showToast('Image too large to store. Try a smaller file.', 'error');
+            }
+        }
     }
 
     // --- Collect active reference images ---
@@ -495,10 +508,25 @@ const ImageStudio = (() => {
                 if (!file) return;
                 const reader = new FileReader();
                 reader.onload = (ev) => {
-                    const dataUrl = ev.target.result;
-                    setRef(key, dataUrl);
-                    if (preview) preview.innerHTML = `<img src="${dataUrl}" alt="${key} reference">`;
-                    showToast(`${key} reference uploaded!`, 'success');
+                    // Compress the image to save localStorage space
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const maxDim = 800;
+                        let w = img.width, h = img.height;
+                        if (w > maxDim || h > maxDim) {
+                            if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+                            else { w = Math.round(w * maxDim / h); h = maxDim; }
+                        }
+                        canvas.width = w;
+                        canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        const compressedUrl = canvas.toDataURL('image/jpeg', 0.8);
+                        setRef(key, compressedUrl);
+                        if (preview) preview.innerHTML = `<img src="${compressedUrl}" alt="${key} reference">`;
+                        showToast(`${key} reference uploaded!`, 'success');
+                    };
+                    img.src = ev.target.result;
                 };
                 reader.readAsDataURL(file);
             });
