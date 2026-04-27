@@ -4,8 +4,9 @@
 
 const ImageStudio = (() => {
     // --- State ---
-    const geminiApiKey = 'AIzaSyBrvWtI-4GI-J6lu5FT0I4hvBMpTPBw4Ok';
-    let githubToken = localStorage.getItem('kyo_github_token') || '';
+    const API_BASE = 'https://kyoklubv.vercel.app'; // Vercel backend
+    const STUDIO_PIN = '3340'; // Reuse admin PIN for API auth
+    let githubToken = ''; // No longer needed client-side
     let generatedImageUrl = null;
     let generatedImageB64 = null;
     let selectedDrinkIndex = -1;
@@ -151,117 +152,52 @@ const ImageStudio = (() => {
         return prompt;
     }
 
-    // --- API Calls (Gemini / Nano Banana Pro) ---
+    // --- API Calls (via Vercel backend) ---
     async function generateImage(prompt, inputImages = []) {
-        if (!geminiApiKey) throw new Error('Gemini API key not set');
+        log('⏳ Sending to Gemini via backend...', 'info');
 
-        // Build multimodal parts: text prompt + reference images
-        const parts = [{ text: prompt }];
-
-        // Add each reference image as an inline_data part
-        for (const dataUrl of inputImages) {
-            // dataUrl format: "data:image/jpeg;base64,/9j/4AAQ..."
-            const match = dataUrl.match(/^data:(image\/\w+);base64,(.+)$/);
-            if (match) {
-                parts.push({
-                    inline_data: {
-                        mime_type: match[1],
-                        data: match[2]
-                    }
-                });
-            }
-        }
-
-        const requestBody = {
-            contents: [{ parts: parts }],
-            generationConfig: {
-                responseModalities: ["TEXT", "IMAGE"]
-            }
-        };
-
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${geminiApiKey}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(requestBody)
-            }
-        );
+        const response = await fetch(`${API_BASE}/api/studio/generate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                prompt,
+                referenceImages: inputImages,
+                pin: STUDIO_PIN
+            })
+        });
 
         if (!response.ok) {
             const err = await response.json().catch(() => ({}));
-            throw new Error(err.error?.message || `API error ${response.status}`);
+            throw new Error(err.error || `API error ${response.status}`);
         }
 
         const result = await response.json();
 
-        // Extract the generated image from the response
-        const candidates = result.candidates;
-        if (!candidates || candidates.length === 0) {
-            throw new Error('No candidates returned from Gemini');
-        }
-
-        let imageB64 = null;
-        for (const part of candidates[0].content.parts) {
-            if (part.inlineData) {
-                imageB64 = part.inlineData.data;
-                break;
-            }
-        }
-
-        if (!imageB64) {
-            // Check if only text was returned (safety filter or no image)
-            const textParts = candidates[0].content.parts.filter(p => p.text);
-            const msg = textParts.map(p => p.text).join(' ') || 'No image generated';
-            throw new Error(`Gemini returned text only: ${msg.substring(0, 200)}`);
+        if (!result.image) {
+            throw new Error('No image returned from server');
         }
 
         return {
-            b64: imageB64,
+            b64: result.image,
             revisedPrompt: prompt
         };
     }
 
-    // --- GitHub Push ---
+    // --- GitHub Push (via Vercel backend) ---
     async function pushToGitHub(imagePath, base64Content) {
-        if (!githubToken) throw new Error('GitHub token not set');
-
-        const repoPath = imagePath.replace('../', '');
-
-        // Get current file SHA if it exists
-        let sha = null;
-        try {
-            const existing = await fetch(
-                `https://api.github.com/repos/nuri7/kyo-drink-oracle/contents/${repoPath}`,
-                { headers: { 'Authorization': `token ${githubToken}` } }
-            );
-            if (existing.ok) {
-                const data = await existing.json();
-                sha = data.sha;
-            }
-        } catch (e) { /* file doesn't exist yet, that's fine */ }
-
-        const body = {
-            message: `🎨 Update drink image: ${repoPath}`,
-            content: base64Content
-        };
-        if (sha) body.sha = sha;
-
-        const response = await fetch(
-            `https://api.github.com/repos/nuri7/kyo-drink-oracle/contents/${repoPath}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${githubToken}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            }
-        );
+        const response = await fetch(`${API_BASE}/api/studio/replace`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                imagePath,
+                imageBase64: base64Content,
+                pin: STUDIO_PIN
+            })
+        });
 
         if (!response.ok) {
             const err = await response.json().catch(() => ({}));
-            throw new Error(err.message || `GitHub API error ${response.status}`);
+            throw new Error(err.error || `API error ${response.status}`);
         }
 
         return await response.json();
@@ -515,7 +451,6 @@ const ImageStudio = (() => {
         if (!btn) return;
 
         btn.addEventListener('click', async () => {
-            if (!geminiApiKey) { showToast('Gemini API key not configured', 'error'); return; }
             if (selectedDrinkIndex < 0) { showToast('Please select a drink first', 'error'); return; }
 
             const drink = DRINKS[selectedDrinkIndex];
@@ -605,8 +540,8 @@ const ImageStudio = (() => {
 
         // GitHub push button
         document.getElementById('push-github-btn')?.addEventListener('click', async () => {
-            if (!generatedImageB64 || !githubToken) {
-                showToast(githubToken ? 'No image to push' : 'Set GitHub token first', 'error');
+            if (!generatedImageB64) {
+                showToast('No image to push', 'error');
                 return;
             }
             const drink = DRINKS[selectedDrinkIndex];
