@@ -108,9 +108,10 @@ const ImageStudio = (() => {
 
         let prompt = `Professional product photography of "${drink.name}" drink. ${drink.desc}. `;
 
-        // Cup reference
+        // Cup reference — combine image ref + text description for maximum adherence
         if (useCup && cupRef.image && imgIdx('cup') > 0) {
-            prompt += `The drink MUST be served in the exact glass/cup shown in image ${imgIdx('cup')}. `;
+            const cupDesc = cupRef.description ? ` (${cupRef.description})` : '';
+            prompt += `The drink MUST be served in the EXACT same glass/cup as shown in image ${imgIdx('cup')}${cupDesc}. Replicate the exact shape, height, curvature, and transparency of that glass precisely. `;
         } else if (useCup && cupRef.description) {
             prompt += `Served in: ${cupRef.description}. `;
         } else {
