@@ -560,6 +560,40 @@ const ImageStudio = (() => {
             }
         });
 
+        // Replace Current Image button
+        document.getElementById('replace-btn')?.addEventListener('click', () => {
+            if (!generatedImageB64 || selectedDrinkIndex < 0) return;
+            const drink = DRINKS[selectedDrinkIndex];
+
+            // Extract just the filename from the image path
+            const pathParts = drink.image.split('/');
+            const exactFilename = pathParts[pathParts.length - 1];
+
+            // Download with the exact filename
+            downloadImage(generatedImageB64, exactFilename);
+
+            // Update the current preview in the Image Studio
+            const currentPreview = document.getElementById('current-preview');
+            if (currentPreview) {
+                currentPreview.innerHTML = `<img src="data:image/png;base64,${generatedImageB64}" alt="${drink.name}">`;
+            }
+
+            // Update the menu grid card
+            const menuCards = document.querySelectorAll('#menu-grid .menu-card');
+            if (menuCards[selectedDrinkIndex]) {
+                const imgEl = menuCards[selectedDrinkIndex].querySelector('.menu-card-img');
+                if (imgEl && imgEl.tagName === 'IMG') {
+                    imgEl.src = `data:image/png;base64,${generatedImageB64}`;
+                }
+            }
+
+            // Show the target path for manual file replacement
+            const targetPath = drink.image.replace('../', '');
+            log(`✅ Downloaded as "${exactFilename}"`, 'success');
+            log(`📂 Replace file at: ${targetPath}`, 'info');
+            showToast(`Saved as "${exactFilename}" — move it to ${targetPath}`, 'success');
+        });
+
         // Download button
         document.getElementById('download-btn')?.addEventListener('click', () => {
             if (!generatedImageB64) return;
