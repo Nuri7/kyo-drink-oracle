@@ -68,33 +68,69 @@ const ImageStudio = (() => {
         if (description !== undefined) localStorage.setItem(`kyo_ref_${key}_desc`, description);
     }
 
+    // --- Collect active reference images ---
+    function getActiveRefImages() {
+        const refs = [];
+        const mapping = []; // tracks which ref key is at which index
+        const useCup = document.getElementById('use-cup-ref')?.checked;
+        const useBg = document.getElementById('use-bg-ref')?.checked;
+        const useLogo = document.getElementById('use-logo-ref')?.checked;
+
+        if (useCup && getRef('cup').image) {
+            refs.push(getRef('cup').image); // data:image/... URI
+            mapping.push('cup');
+        }
+        if (useBg && getRef('background').image) {
+            refs.push(getRef('background').image);
+            mapping.push('background');
+        }
+        if (useLogo && getRef('logo').image) {
+            refs.push(getRef('logo').image);
+            mapping.push('logo');
+        }
+        return { refs, mapping };
+    }
+
     // --- Prompt Builder ---
     function buildPrompt(drink, customPrompt) {
         if (customPrompt && customPrompt.trim()) return customPrompt;
 
-        const bgRef = getRef('background');
-        const cupRef = getRef('cup');
-        const logoRef = getRef('logo');
+        const { mapping } = getActiveRefImages();
         const useBg = document.getElementById('use-bg-ref')?.checked;
         const useCup = document.getElementById('use-cup-ref')?.checked;
         const useLogo = document.getElementById('use-logo-ref')?.checked;
+        const bgRef = getRef('background');
+        const cupRef = getRef('cup');
+        const logoRef = getRef('logo');
 
-        let prompt = `Professional product photography of "${drink.name}" iced drink. The drink features distinct layers and ingredients: ${drink.desc}. `;
-        
-        if (useCup && cupRef.description) {
-            prompt += `The drink MUST be served exactly in the cup/glass described as: ${cupRef.description}. `;
+        // Helper: find the 1-based image index for a given ref key
+        const imgIdx = (key) => mapping.indexOf(key) + 1;
+
+        let prompt = `Professional product photography of "${drink.name}" drink. ${drink.desc}. `;
+
+        // Cup reference
+        if (useCup && cupRef.image && imgIdx('cup') > 0) {
+            prompt += `The drink MUST be served in the exact glass/cup shown in image ${imgIdx('cup')}. `;
+        } else if (useCup && cupRef.description) {
+            prompt += `Served in: ${cupRef.description}. `;
         } else {
             prompt += `Served in a modern, clear glass suitable for a Japanese café. `;
         }
 
-        if (useBg && bgRef.description) {
-            prompt += `The background MUST exactly match this setting: ${bgRef.description}. `;
+        // Background reference
+        if (useBg && bgRef.image && imgIdx('background') > 0) {
+            prompt += `The background and surface MUST match the setting shown in image ${imgIdx('background')}. `;
+        } else if (useBg && bgRef.description) {
+            prompt += `Background: ${bgRef.description}. `;
         } else {
             prompt += `On a clean, elegant surface with soft natural daylight. `;
         }
 
-        if (useLogo && logoRef.description) {
-            prompt += `The following logo MUST be subtly incorporated into the scene (e.g., printed on a high-quality coaster or delicately etched onto the glass): ${logoRef.description}. `;
+        // Logo reference
+        if (useLogo && logoRef.image && imgIdx('logo') > 0) {
+            prompt += `Subtly incorporate the logo from image ${imgIdx('logo')} into the scene, etched on the glass or printed on a coaster. `;
+        } else if (useLogo && logoRef.description) {
+            prompt += `Logo: ${logoRef.description}. `;
         }
 
         prompt += `${PRESETS[activePreset]}. Extremely photorealistic, 4K, high-end commercial food photography, perfect lighting, highly detailed textures.`;
@@ -102,23 +138,29 @@ const ImageStudio = (() => {
     }
 
     // --- API Calls ---
-    async function generateImage(prompt, size = '3:4') {
+    async function generateImage(prompt, inputImages = [], size = '3:4') {
         if (!replicateToken) throw new Error('Replicate API token not set');
 
-        // Step 1: Create the prediction (wrapped in CORS proxy)
-        const createResponse = await fetch('https://cors.eu.org/https://api.replicate.com/v1/models/black-forest-labs/flux-pro/predictions', {
+        // Build input payload
+        const inputPayload = {
+            prompt: prompt,
+            aspect_ratio: size,
+            output_format: "png"
+        };
+
+        // If reference images are provided, include them
+        if (inputImages.length > 0) {
+            inputPayload.input_images = inputImages;
+        }
+
+        // Step 1: Create the prediction (FLUX 2 Pro with multi-reference support)
+        const createResponse = await fetch('https://cors.eu.org/https://api.replicate.com/v1/models/black-forest-labs/flux-2-pro/predictions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${replicateToken}`
             },
-            body: JSON.stringify({
-                input: {
-                    prompt: prompt,
-                    aspect_ratio: size,
-                    output_format: "png"
-                }
-            })
+            body: JSON.stringify({ input: inputPayload })
         });
 
         if (!createResponse.ok) {
@@ -128,14 +170,15 @@ const ImageStudio = (() => {
 
         let prediction = await createResponse.json();
 
-        // Step 2: Poll until complete (if 'Prefer: wait' timed out or isn't supported)
+        // Step 2: Poll until complete
         while (prediction.status !== "succeeded" && prediction.status !== "failed" && prediction.status !== "canceled") {
-            await new Promise(r => setTimeout(r, 1500));
+            await new Promise(r => setTimeout(r, 2000));
             const pollResponse = await fetch('https://cors.eu.org/' + prediction.urls.get, {
                 headers: { 'Authorization': `Bearer ${replicateToken}` }
             });
             if (!pollResponse.ok) throw new Error('Failed to check prediction status');
             prediction = await pollResponse.json();
+            log(`⏳ Status: ${prediction.status}...`, 'info');
         }
 
         if (prediction.status !== "succeeded") {
@@ -148,7 +191,6 @@ const ImageStudio = (() => {
         }
         
         // Step 3: Fetch the image and convert to base64
-        // Replicate's CDN (replicate.delivery) allows CORS directly
         const imgResponse = await fetch(imageUrl);
         const blob = await imgResponse.blob();
         const b64 = await new Promise((resolve) => {
@@ -330,12 +372,18 @@ const ImageStudio = (() => {
             const customPrompt = document.getElementById('prompt-input')?.value || '';
             const prompt = customPrompt.trim() || buildPrompt(drink, '');
 
+            // Collect reference images
+            const { refs, mapping } = getActiveRefImages();
+
             btn.classList.add('loading');
             btn.disabled = true;
             log(`Generating image for "${drink.name}"...`, 'info');
+            if (refs.length > 0) {
+                log(`📷 Using ${refs.length} reference image(s): ${mapping.join(', ')}`, 'info');
+            }
 
             try {
-                const result = await generateImage(prompt);
+                const result = await generateImage(prompt, refs);
                 generatedImageB64 = result.b64;
                 generatedImageUrl = `data:image/png;base64,${result.b64}`;
 
