@@ -37,6 +37,7 @@
             <!-- Tab Navigation -->
             <div class="admin-tabs">
                 <button class="admin-tab active" data-tab="tab-analytics">📊 Analytics</button>
+                <button class="admin-tab" data-tab="tab-menu">🍵 Menu</button>
                 <button class="admin-tab" data-tab="tab-studio">🎨 Image Studio</button>
                 <button class="admin-tab" data-tab="tab-references">📷 References</button>
                 <button class="admin-tab" data-tab="tab-history">🕑 History</button>
@@ -48,6 +49,19 @@
                     <iframe width="100%" height="400" frameborder="0" allowfullscreen
                         src="https://eu.posthog.com/embedded/RJWEEC0eX8RwKK6y2s3OPOWknkrWFw" key="1"
                         sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation allow-modals"></iframe>
+                </div>
+            </div>
+
+            <!-- ==================== MENU MANAGER TAB ==================== -->
+            <div id="tab-menu" class="tab-content">
+                <div class="studio-section">
+                    <div class="menu-header">
+                        <h3>🍵 Menu Items</h3>
+                        <p style="font-size:0.9rem;color:var(--text-light);margin-bottom:1rem;">
+                            View all drinks on the menu. Replace images by uploading your own or generating with AI.
+                        </p>
+                    </div>
+                    <div class="menu-grid" id="menu-grid"></div>
                 </div>
             </div>
 

@@ -337,6 +337,120 @@ const ImageStudio = (() => {
         setupRefManager();
         setupTabs();
         renderHistory();
+        renderMenuGrid();
+    }
+
+    // --- Menu Manager ---
+    function renderMenuGrid() {
+        const grid = document.getElementById('menu-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        DRINKS.forEach((drink, index) => {
+            const isHot = drink.image.includes('hot_drinks');
+            const card = document.createElement('div');
+            card.className = 'menu-card';
+            card.innerHTML = `
+                <span class="menu-card-badge ${isHot ? 'hot' : 'cold'}">${isHot ? 'Hot' : 'Cold'}</span>
+                <img class="menu-card-img" src="${drink.image}" alt="${drink.name}"
+                     onerror="this.outerHTML='<div class=\\'menu-card-img missing\\'>🍵</div>'">
+                <div class="menu-card-info">
+                    <div class="menu-card-name" title="${drink.name}">${drink.name}</div>
+                    <div class="menu-card-price">${drink.price}</div>
+                </div>
+                <div class="menu-card-actions">
+                    <button class="menu-ai-btn" data-idx="${index}" title="Generate with AI">🤖 AI</button>
+                    <button class="menu-upload-btn" data-idx="${index}" title="Upload image">📤 Upload</button>
+                    <button class="menu-download-btn" data-idx="${index}" title="Download image">💾</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Hidden file input for uploads
+        let uploadInput = document.getElementById('menu-upload-input');
+        if (!uploadInput) {
+            uploadInput = document.createElement('input');
+            uploadInput.type = 'file';
+            uploadInput.accept = 'image/*';
+            uploadInput.id = 'menu-upload-input';
+            uploadInput.style.display = 'none';
+            document.body.appendChild(uploadInput);
+        }
+
+        // AI generate → switch to Image Studio with drink pre-selected
+        grid.querySelectorAll('.menu-ai-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const idx = parseInt(btn.dataset.idx);
+                // Switch to Image Studio tab
+                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                const studioTab = document.querySelector('[data-tab="tab-studio"]');
+                const studioContent = document.getElementById('tab-studio');
+                if (studioTab) studioTab.classList.add('active');
+                if (studioContent) studioContent.classList.add('active');
+                // Select the drink
+                const sel = document.getElementById('drink-select');
+                if (sel) {
+                    sel.value = idx;
+                    sel.dispatchEvent(new Event('change'));
+                }
+                showToast(`Selected "${DRINKS[idx].name}" — edit prompt and generate!`, 'info');
+            });
+        });
+
+        // Upload replacement image
+        let activeUploadIdx = -1;
+        grid.querySelectorAll('.menu-upload-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeUploadIdx = parseInt(btn.dataset.idx);
+                uploadInput.click();
+            });
+        });
+
+        uploadInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file || activeUploadIdx < 0) return;
+            const drink = DRINKS[activeUploadIdx];
+
+            // Show the uploaded image immediately in the card
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const cards = grid.querySelectorAll('.menu-card');
+                if (cards[activeUploadIdx]) {
+                    const imgEl = cards[activeUploadIdx].querySelector('.menu-card-img');
+                    if (imgEl) {
+                        if (imgEl.tagName === 'DIV') {
+                            // Replace missing placeholder with img
+                            const newImg = document.createElement('img');
+                            newImg.className = 'menu-card-img';
+                            newImg.src = ev.target.result;
+                            newImg.alt = drink.name;
+                            imgEl.replaceWith(newImg);
+                        } else {
+                            imgEl.src = ev.target.result;
+                        }
+                    }
+                }
+                showToast(`Image updated for "${drink.name}". Use Push to GitHub to deploy.`, 'success');
+            };
+            reader.readAsDataURL(file);
+            uploadInput.value = '';
+        });
+
+        // Download current image
+        grid.querySelectorAll('.menu-download-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const idx = parseInt(btn.dataset.idx);
+                const drink = DRINKS[idx];
+                const link = document.createElement('a');
+                link.href = drink.image;
+                link.download = drink.name.toLowerCase().replace(/\s+/g, '_') + '.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        });
     }
 
     function setupTabs() {
