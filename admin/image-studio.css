@@ -112,6 +112,19 @@
 }
 
 /* --- Studio Layout --- */
+.studio-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.studio-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .studio-section {
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
@@ -657,6 +670,13 @@
 }
 
 /* --- Responsive --- */
+@media (max-width: 992px) {
+    .studio-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
 @media (max-width: 768px) {
     .admin-tabs {
         flex-wrap: nowrap;

@@ -54,89 +54,74 @@
             <!-- ==================== IMAGE STUDIO TAB ==================== -->
             <div id="tab-studio" class="tab-content">
 
-                <!-- API Key Setup -->
-                <div class="api-setup">
-                    <h3>🔑 Replicate API Token</h3>
-                    <div class="api-key-row">
-                        <input type="password" id="api-key-input" class="api-key-input" placeholder="r8_...">
-                        <button id="save-api-key" class="action-btn primary">Save Token</button>
-                        <span id="api-key-status" class="api-key-status disconnected">Not set</span>
-                    </div>
-                    <details class="github-setup">
-                        <summary>🔗 GitHub Integration (optional)</summary>
-                        <div class="github-setup-content">
-                            <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:0.8rem;">
-                                Add a GitHub Personal Access Token to push generated images directly to your repo.
-                            </p>
-                            <div class="api-key-row">
-                                <input type="password" id="github-token-input" class="api-key-input" placeholder="ghp_...">
-                                <button id="save-github-token" class="action-btn primary">Save Token</button>
+                <!-- Two Column Layout -->
+                <div class="studio-layout">
+                    <!-- Left Column: Controls -->
+                    <div class="studio-column left-column">
+                        <div class="studio-section">
+                            <h3>🍵 Generate New Image</h3>
+
+                            <label style="font-weight:600;font-size:0.9rem;display:block;margin-bottom:0.5rem;">Select Drink</label>
+                            <select id="drink-select" class="drink-selector"></select>
+
+                            <label style="font-weight:600;font-size:0.9rem;display:block;margin-top:1.2rem;margin-bottom:0.3rem;">Style Preset</label>
+                            <div class="preset-row">
+                                <button class="preset-btn active" data-preset="product">📸 Product</button>
+                                <button class="preset-btn" data-preset="artistic">🎨 Artistic</button>
+                                <button class="preset-btn" data-preset="minimal">🍃 Minimal</button>
+                                <button class="preset-btn" data-preset="moody">🌙 Moody</button>
                             </div>
+
+                            <label style="font-weight:600;font-size:0.9rem;display:block;margin-top:0.5rem;">Prompt</label>
+                            <textarea id="prompt-input" class="prompt-area" placeholder="Select a drink to auto-generate a prompt, or write your own..."></textarea>
+                            <p class="prompt-hint">Auto-generated from drink data + preset + references. Edit freely.</p>
+
+                            <div class="ref-toggles">
+                                <label class="ref-toggle">
+                                    <input type="checkbox" id="use-bg-ref" checked> Use background reference
+                                </label>
+                                <label class="ref-toggle">
+                                    <input type="checkbox" id="use-cup-ref" checked> Use cup/glass reference
+                                </label>
+                                <label class="ref-toggle">
+                                    <input type="checkbox" id="use-logo-ref" checked> Use logo reference
+                                </label>
+                            </div>
+
+                            <button id="generate-btn" class="generate-btn">🎨 Generate Image</button>
                         </div>
-                    </details>
-                </div>
-
-                <!-- Drink Selector + Prompt -->
-                <div class="studio-section">
-                    <h3>🍵 Generate New Image</h3>
-
-                    <label style="font-weight:600;font-size:0.9rem;display:block;margin-bottom:0.5rem;">Select Drink</label>
-                    <select id="drink-select" class="drink-selector"></select>
-
-                    <label style="font-weight:600;font-size:0.9rem;display:block;margin-top:1.2rem;margin-bottom:0.3rem;">Style Preset</label>
-                    <div class="preset-row">
-                        <button class="preset-btn active" data-preset="product">📸 Product</button>
-                        <button class="preset-btn" data-preset="artistic">🎨 Artistic</button>
-                        <button class="preset-btn" data-preset="minimal">🍃 Minimal</button>
-                        <button class="preset-btn" data-preset="moody">🌙 Moody</button>
                     </div>
 
-                    <label style="font-weight:600;font-size:0.9rem;display:block;margin-top:0.5rem;">Prompt</label>
-                    <textarea id="prompt-input" class="prompt-area" placeholder="Select a drink to auto-generate a prompt, or write your own..."></textarea>
-                    <p class="prompt-hint">Auto-generated from drink data + preset + references. Edit freely.</p>
-
-                    <div class="ref-toggles">
-                        <label class="ref-toggle">
-                            <input type="checkbox" id="use-bg-ref" checked> Use background reference
-                        </label>
-                        <label class="ref-toggle">
-                            <input type="checkbox" id="use-cup-ref" checked> Use cup/glass reference
-                        </label>
-                        <label class="ref-toggle">
-                            <input type="checkbox" id="use-logo-ref" checked> Use logo reference
-                        </label>
-                    </div>
-
-                    <button id="generate-btn" class="generate-btn">🎨 Generate Image</button>
-                </div>
-
-                <!-- Side-by-Side Preview -->
-                <div class="studio-section">
-                    <h3>👀 Preview</h3>
-                    <div class="preview-grid">
-                        <div class="preview-panel">
-                            <div class="preview-label">Current Image</div>
-                            <div class="preview-img-container" id="current-preview">
-                                <div class="preview-placeholder">
-                                    <span class="placeholder-icon">🍵</span>
-                                    Select a drink to preview
+                    <!-- Right Column: Preview -->
+                    <div class="studio-column right-column">
+                        <div class="studio-section preview-section">
+                            <h3>👀 Preview</h3>
+                            <div class="preview-grid">
+                                <div class="preview-panel">
+                                    <div class="preview-label">Current Image</div>
+                                    <div class="preview-img-container" id="current-preview">
+                                        <div class="preview-placeholder">
+                                            <span class="placeholder-icon">🍵</span>
+                                            Select a drink to preview
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="preview-panel generated">
+                                    <div class="preview-label">✨ AI Generated</div>
+                                    <div class="preview-img-container" id="generated-preview">
+                                        <div class="preview-placeholder">
+                                            <span class="placeholder-icon">🤖</span>
+                                            Generate an image to preview
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="preview-panel generated">
-                            <div class="preview-label">✨ AI Generated</div>
-                            <div class="preview-img-container" id="generated-preview">
-                                <div class="preview-placeholder">
-                                    <span class="placeholder-icon">🤖</span>
-                                    Generate an image to preview
-                                </div>
+
+                            <div class="action-row">
+                                <button id="download-btn" class="action-btn primary post-gen-action" disabled>💾 Download Image</button>
+                                <button id="push-github-btn" class="action-btn post-gen-action" disabled>🚀 Push to GitHub</button>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="action-row">
-                        <button id="download-btn" class="action-btn primary post-gen-action" disabled>💾 Download Image</button>
-                        <button id="push-github-btn" class="action-btn post-gen-action" disabled>🚀 Push to GitHub</button>
                     </div>
                 </div>
 

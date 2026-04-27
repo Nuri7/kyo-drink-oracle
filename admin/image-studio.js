@@ -4,7 +4,7 @@
 
 const ImageStudio = (() => {
     // --- State ---
-    let replicateToken = localStorage.getItem('kyo_replicate_token') || '';
+    let replicateToken = 'r8_7StOkfCBWD5J2AeRavTGUjsmwwtN2981xYsij';
     let githubToken = localStorage.getItem('kyo_github_token') || '';
     let generatedImageUrl = null;
     let generatedImageB64 = null;
@@ -252,11 +252,9 @@ const ImageStudio = (() => {
     // --- Init UI ---
     function init() {
         populateDrinkSelector();
-        setupApiKeyUI();
         setupPresets();
         setupGenerateBtn();
         setupRefManager();
-        setupGitHubUI();
         setupTabs();
         renderHistory();
     }
@@ -305,34 +303,7 @@ const ImageStudio = (() => {
         textarea.value = buildPrompt(drink, '');
     }
 
-    function setupApiKeyUI() {
-        const input = document.getElementById('api-key-input');
-        const saveBtn = document.getElementById('save-api-key');
-        const status = document.getElementById('api-key-status');
-        if (!input) return;
 
-        if (replicateToken) {
-            input.value = '••••••••' + replicateToken.slice(-6);
-            input.dataset.masked = 'true';
-            if (status) { status.className = 'api-key-status connected'; status.textContent = '✓ Connected'; }
-        }
-
-        input.addEventListener('focus', () => {
-            if (input.dataset.masked === 'true') { input.value = ''; input.dataset.masked = 'false'; }
-        });
-
-        saveBtn?.addEventListener('click', () => {
-            const val = input.value.trim();
-            if (val && !val.startsWith('••')) {
-                replicateToken = val;
-                localStorage.setItem('kyo_replicate_token', val);
-                input.value = '••••••••' + val.slice(-6);
-                input.dataset.masked = 'true';
-                if (status) { status.className = 'api-key-status connected'; status.textContent = '✓ Connected'; }
-                showToast('API key saved!', 'success');
-            }
-        });
-    }
 
     function setupPresets() {
         document.querySelectorAll('.preset-btn').forEach(btn => {
@@ -478,31 +449,7 @@ const ImageStudio = (() => {
         });
     }
 
-    function setupGitHubUI() {
-        const input = document.getElementById('github-token-input');
-        const saveBtn = document.getElementById('save-github-token');
-        if (!input) return;
 
-        if (githubToken) {
-            input.value = '••••••••' + githubToken.slice(-6);
-            input.dataset.masked = 'true';
-        }
-
-        input.addEventListener('focus', () => {
-            if (input.dataset.masked === 'true') { input.value = ''; input.dataset.masked = 'false'; }
-        });
-
-        saveBtn?.addEventListener('click', () => {
-            const val = input.value.trim();
-            if (val && !val.startsWith('••')) {
-                githubToken = val;
-                localStorage.setItem('kyo_github_token', val);
-                input.value = '••••••••' + val.slice(-6);
-                input.dataset.masked = 'true';
-                showToast('GitHub token saved!', 'success');
-            }
-        });
-    }
 
     function renderHistory() {
         const grid = document.getElementById('history-grid');
