@@ -262,15 +262,34 @@ const ImageStudio = (() => {
 
     // --- History ---
     function addToHistory(drinkName, b64) {
-        const entry = {
-            drink: drinkName,
-            timestamp: new Date().toISOString(),
-            thumbnail: b64.substring(0, 200) + '...',
-            b64: b64
+        // Create a small thumbnail to avoid localStorage quota issues
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const thumbSize = 150;
+            canvas.width = thumbSize;
+            canvas.height = thumbSize * (img.height / img.width);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const thumbB64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1];
+
+            const entry = {
+                drink: drinkName,
+                timestamp: new Date().toISOString(),
+                thumbnail: thumbB64
+            };
+            imageHistory.unshift(entry);
+            if (imageHistory.length > 20) imageHistory.pop();
+            try {
+                localStorage.setItem('kyo_image_history', JSON.stringify(imageHistory));
+            } catch (e) {
+                // If still too large, trim older entries
+                while (imageHistory.length > 5) imageHistory.pop();
+                try { localStorage.setItem('kyo_image_history', JSON.stringify(imageHistory)); } catch (_) {}
+            }
+            renderHistory();
         };
-        imageHistory.unshift(entry);
-        if (imageHistory.length > 20) imageHistory.pop();
-        localStorage.setItem('kyo_image_history', JSON.stringify(imageHistory));
+        img.src = `data:image/png;base64,${b64}`;
     }
 
     // --- Toast ---
@@ -396,11 +415,11 @@ const ImageStudio = (() => {
                 // Enable action buttons
                 document.querySelectorAll('.post-gen-action').forEach(b => b.disabled = false);
 
-                addToHistory(drink.name, result.b64);
-                renderHistory();
                 log(`✓ Image generated successfully!`, 'success');
-                if (result.revisedPrompt) log(`Revised prompt: ${result.revisedPrompt}`, 'info');
                 showToast('Image generated!', 'success');
+
+                // Save to history (async, won't block UI)
+                addToHistory(drink.name, result.b64);
             } catch (err) {
                 log(`✗ Error: ${err.message}`, 'error');
                 showToast(`Generation failed: ${err.message}`, 'error');
